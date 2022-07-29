@@ -1,5 +1,5 @@
 {
-  "name": "student_app",
+  "name": "student_academic_radar",
   "version": "1.0.0",
   "description": "ACADEMIC TRACKER",
   "main": "backend/server.js",
@@ -25,5 +25,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bezyl-Mophat-Otieno/STUDENT_ACADEMIC_RADAR.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bezyl-Mophat-Otieno/STUDENT_ACADEMIC_RADAR/issues"
+  },
+  "homepage": "https://github.com/Bezyl-Mophat-Otieno/STUDENT_ACADEMIC_RADAR#readme"
 }
