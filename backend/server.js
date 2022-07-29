@@ -12,8 +12,8 @@ const connectDB = require('./config/db');
 // connectDB();
 //adding a body parser middleware 
 app.use(express.json());
-//adding a form handling data middleware
 
+//adding a form handling data middleware
 app.use(express.urlencoded({extended:false}));
 
 
@@ -26,12 +26,16 @@ app.use('/api/goal',require('./routes/goalRoutes'))
 app.use('/api/skill',require('./routes/skillRoutes'))
 
 app.set('view engine' , 'ejs');
-app.set('views' , 'backend/views');
+// app.set('views' , 'backend/views');
+app.set('views', path.join(__dirname, 'views'));
 
 //RENDERING MY EJS VIEWS
-app.get('/', (req,res) =>res.render('home')  )
-app.get('/register', (req,res) =>res.render('register')  )
-app.get('/login', (req,res) =>res.render('login')  )
+app.get('/', (req,res) =>{res.render('home')})
+app.get('/register', (req,res) =>{res.render('register')})
+app.get('/login', (req,res) =>{res.render('login')})
+
+
+
 app.get('/dashboard', (req,res) =>res.render('dashboard')  )
 
 
