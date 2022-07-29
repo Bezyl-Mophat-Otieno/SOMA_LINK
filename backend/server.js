@@ -9,7 +9,7 @@ const connectDB = require('./config/db');
 
 
 
-// connectDB();
+connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 

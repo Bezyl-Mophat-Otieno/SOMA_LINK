@@ -16,15 +16,13 @@ let errors = [];
   res.status(400)
   errors.push({msg:'kindly fill in all fields'});
                 
-            }
+            }else{
             //Ensuring the Password is at least 6 characters
-
-
             if (password.length < 6) {
                 errors.push({ msg: 'Password must be at least 6 characters' });
               }
-
-//If any Error Occurs render the pass back the data 
+            }
+//If any Error Occurs re-render register page displaying the data keyed in. 
 
 
 if (errors.length > 0) {
@@ -36,44 +34,50 @@ if (errors.length > 0) {
       password
       
     });
+} else{
+
+            //Check if a student already exists
+            const studentExist =await Student.findOne({email});
+            if(studentExist){
+res.status(400)
+errors.push({msg:"Student already exists"})
+
+res.render('register', {
+    errors,
+    name,
+    email,
+    course,
+    password
+    
+  });
+
+            }else{
+//Generate salt that will be used in encrypting the password(hashing the password)
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password,salt);
+
+            //Create student
+                const student = Student.create({
+name:req.body.name,
+course:req.body.course,
+email:req.body.email,
+password:hashedPassword
+
+                });
+
+              }
+
+                // if student was registered successfully
+if(student){
+res.render('dashboard');
 }
 
 
-//             //Check if a student already exists
-//             const studentExist =await Student.findOne({email});
-//             if(studentExist){
-// res.status(400)
-// errors.push({msg:"Student already exists"})
-
-// res.render('registerModal', {
-//     errors,
-//     name,
-//     email,
-//     course,
-//     password
-    
-//   });
-
-//             }
-// //Generate salt that will be used in encrypting the password(hashing the password)
-// const salt = await bcrypt.genSalt(10);
-// const hashedPassword = await bcrypt.hash(password,salt);
-
-//             //Create student
-//                 const student = Student.create({
-// name:req.body.name,
-// course:req.body.course,
-// email:req.body.email,
-// password:hashedPassword
-
-//                 })
-
-//                 // if student was registered successfully
-// if(student){
-// res.render('dashboard');
-// }
-
+}
 });
+
+
+
 
 //@desc student Login
 //@route POST api/student/login
@@ -83,23 +87,9 @@ if (errors.length > 0) {
 const studentLogin= asyncHandler(async (req , res)=>{
 const {email , password} = req.body;
 let errors =[];
-// //Check the existence of as student by the email property
-// const student= await Student.findOne({email});
-
-// if(student  && (await bcrypt.compare(password,student.password))){
-    
-
-// res.render('dashboard');
 
 
-// }else{
-//     res.status(400)
-//     throw new Error('Invalid Credentials')
-// }
-
-
-
-//If any Error Occurs render the redirect back to login
+//If any Error Occurs re-render login page displaying the data keyed in. 
 
 if( !email ||!password){
   res.status(400)
@@ -107,7 +97,7 @@ if( !email ||!password){
                 
             }
 
-
+// re-render login page displaying the data keyed in.
 if (errors.length > 0) {
 res.render('login', {
 errors,
@@ -115,6 +105,33 @@ email,
 password
 
 });
+
+}else{
+
+//  Check the existence of as student by the email property
+const student= await Student.findOne({email});
+
+  if(student  && (await bcrypt.compare(password,student.password))){
+    
+
+    res.render('dashboard');
+    
+    
+    }else{
+        res.status(400)
+        errors.push({msg:'Invalid Credentials'})
+
+        // re-render login page displaying the data keyed in.
+        res.render('login', {
+          errors,
+          email,
+          password
+          
+          });
+
+    }
+    
+
 
 }
 

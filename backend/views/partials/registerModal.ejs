@@ -5,20 +5,21 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">"Without dreams and goals, there is no living.."</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        </div>  
+        
         <div class="modal-body">
 
-          <%- include('./errorPrompts.ejs') %> 
+          <div class="home_icon ">
+            <i class=" fa-brands fa-node-js fa-5x"></i>
+          </div>
           
 <form  action="/api/student" method="POST" >
 
     <div class="form-group">
               
         <label for="name" class="form-label">Name</label>
-          <input type="text" name="name" class="form-control " id="name" placeholder="your@name"value="<%= typeof email != 'undefined' ? email : '' %>"
-          >
+          <input type="text" name="name" class="form-control " id="name" placeholder="your@name">
       </div>
   
 
