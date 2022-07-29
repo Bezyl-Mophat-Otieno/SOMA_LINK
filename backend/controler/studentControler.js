@@ -65,12 +65,14 @@ password:hashedPassword
 
                 });
 
+                                // if student was registered successfully
+if(student){
+  res.render('dashboard');
+  }
+
               }
 
-                // if student was registered successfully
-if(student){
-res.render('dashboard');
-}
+
 
 
 }
