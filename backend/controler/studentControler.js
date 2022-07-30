@@ -2,6 +2,8 @@ const Student=require('../Models/studentModel')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const jwt = require ('jsonwebtoken')
+const passport = require ('passport')
+
 
 //@desc register a student 
 //@route POST /api/student
@@ -69,8 +71,8 @@ password:hashedPassword
 if(student){
 
   //Flash a message before redirecting 
-  req.flash('success_msg', 'Registered Successfully!, You can now login')
-  res.redirect('/api/student/login');
+  req.flash('success_msg', 'Registration Successful ! , You can now login .')
+  res.redirect('/login');
   }
 
               }
@@ -89,7 +91,7 @@ if(student){
 //@access Public
 
 
-const studentLogin= asyncHandler(async (req , res)=>{
+const studentLogin= asyncHandler(async (req , res , next)=>{
 const {email , password} = req.body;
 let errors =[];
 
@@ -113,34 +115,32 @@ password
 
 }else{
 
-//  Check the existence of as student by the email property
-const student= await Student.findOne({email});
-
-  if(student  && (await bcrypt.compare(password,student.password))){
+  // Login Handling
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
     
-
-    res.render('dashboard');
-    
-    
-    }else{
-        res.status(400)
-        errors.push({msg:'Invalid Credentials'})
-
-        // re-render login page displaying the data keyed in.
-        res.render('login', {
-          errors,
-          email,
-          password
-          
-          });
-
-    }
-    
-
+ 
 
 }
 
 });
+
+const studentLogout =  asyncHandler (async (req , res ) =>{
+
+req.logout((err)=>{
+  if(err){
+    return next(err);
+  }
+
+req.flash('success_msg', 'You Are Successfully Logged Out');
+res.redirect('/login');
+});
+
+}) 
+
 // Generate web Token
 const generateToken = (id)=>{
 return jwt.sign({id},process.env.JWT_SECRET_KEY,{expiresIn:'30d'});
@@ -168,6 +168,7 @@ const getStudentData= asyncHandler(async  (req,res)=>{
 
 getStudentData,
 registerStudent,
-studentLogin
+studentLogin,
+studentLogout
 
     };

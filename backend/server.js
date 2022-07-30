@@ -5,12 +5,21 @@ const dotenv = require('dotenv').config();
 const flash = require('connect-flash')
 const session = require('express-session')
 const PORT =process.env.PORT || 8000;
+const passport = require('passport')
 
+// Route (resource ) protection
+
+const {ensureAuthenticated} = require ('./config/auth');
+
+// Passport Config
+require('./config/passport')(passport)
+
+//Mongo DB config
 const connectDB = require('./config/db');
 
 
 
-connectDB();
+// connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 
@@ -25,6 +34,11 @@ app.use(session({
     saveUninitialized: true
   }))
 
+  // Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+
   //Connect- Flash middleware 
 
   app.use(flash());
@@ -37,8 +51,10 @@ app.use(session({
 
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
 
 
+next();
 
 
   })
@@ -58,9 +74,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/', (req,res) =>{res.render('home')})
 app.get('/register', (req,res) =>{res.render('register')})
 app.get('/login', (req,res) =>{res.render('login')})
-
-
-
+app.get('/logout', (req,res) =>{res.render('logout')})
 app.get('/dashboard', (req,res) =>res.render('dashboard')  )
 
 

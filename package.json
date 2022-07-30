@@ -23,7 +23,9 @@
     "express-session": "^1.17.3",
     "express3-handlebars": "^0.5.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.4.3"
+    "mongoose": "^6.4.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
