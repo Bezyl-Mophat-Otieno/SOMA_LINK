@@ -2,7 +2,8 @@ const express = require('express')
 const path = require('path')
 const app =express();
 const dotenv = require('dotenv').config();
-
+const flash = require('connect-flash')
+const session = require('express-session')
 const PORT =process.env.PORT || 8000;
 
 const connectDB = require('./config/db');
@@ -17,6 +18,30 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 
+ //Express session Middleware
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  }))
+
+  //Connect- Flash middleware 
+
+  app.use(flash());
+
+  // NOTE : We now have access to the req.flash.
+
+  //Global variables (declared by the use of a Middleware)
+
+  app.use((req , res , next)=>{
+
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+
+
+
+
+  })
 
 //Student Routing
 app.use('/api/student',require('./routes/studentRoutes'))

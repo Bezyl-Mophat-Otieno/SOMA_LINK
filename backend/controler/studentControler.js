@@ -67,7 +67,10 @@ password:hashedPassword
 
                                 // if student was registered successfully
 if(student){
-  res.render('dashboard');
+
+  //Flash a message before redirecting 
+  req.flash('success_msg', 'Registered Successfully!, You can now login')
+  res.redirect('/api/student/login');
   }
 
               }

@@ -7,4 +7,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
     <% }); %>
+
      <% } %>
+
+     <% if(success_msg != '' ) { %> 
+
+<div class="alert alert-success  alert-dismissible fade show" role="alert">
+            <strong class="text-muted"><%= success_msg %> </strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+
+<% } %> 
