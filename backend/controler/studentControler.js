@@ -11,10 +11,10 @@ const passport = require ('passport')
 const registerStudent= asyncHandler(async (req,res)=>{
     
 //Making sure all the details of the student are captured 
-            const { name , course, email, password  } = req.body;
+            const { name , course, email, password ,password2 } = req.body;
 let errors = [];
 //Ensuring all fields are filled
-            if(!name || !email || !course || !password){
+            if(!name || !email || !course || !password || !password2){
   res.status(400)
   errors.push({msg:'kindly fill in all fields'});
                 
@@ -22,7 +22,13 @@ let errors = [];
             //Ensuring the Password is at least 6 characters
             if (password.length < 6) {
                 errors.push({ msg: 'Password must be at least 6 characters' });
+              } else{
+                if (password !== password2) {
+                  errors.push({ msg: 'Passwords do not match' });
+                }
+
               }
+
             }
 //If any Error Occurs re-render register page displaying the data keyed in. 
 
@@ -33,7 +39,8 @@ if (errors.length > 0) {
       name,
       email,
       course,
-      password
+      password,
+      password2
       
     });
 } else{
@@ -49,7 +56,8 @@ res.render('register', {
     name,
     email,
     course,
-    password
+    password,
+    password2
     
   });
 
@@ -128,7 +136,7 @@ password
 
 });
 
-const studentLogout =  asyncHandler (async (req , res ) =>{
+const studentLogout =  asyncHandler (async (req , res , next) =>{
 
 req.logout((err)=>{
   if(err){

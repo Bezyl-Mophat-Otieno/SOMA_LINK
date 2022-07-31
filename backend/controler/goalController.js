@@ -6,21 +6,36 @@ const Student = require('../Models/studentModel')
 //@public
 
 const setGoal = asyncHandler( async (req,res)=>{
+let errors = [];
+
     if(!req.body.text){
 res.status(400)
-throw new Error('Kindly fill  in the text field');
+errors.push({msg:'Kindly fill  in the text field'});
+
 
     }
 
+if(errors.length > 0){
+res.render('dashboard',{errors})
+
+
+} else{
+
+
     const goal = await Goal.create({
-        student: await req.student.id,
+        student: await req.user.id,
         text: await req.body.text
 
 
 
-    })
-    res.status(200).json(goal);
+    }) 
 
+    if(goal){
+
+        res.render('dashboard')
+    }
+
+}
 })
 
 

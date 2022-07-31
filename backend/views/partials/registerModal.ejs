@@ -10,6 +10,9 @@
         
         <div class="modal-body">
 
+          <h4 class="container  border border-secondary rounded-pill"> STUDENT</h4>
+
+
           <div class="home_icon ">
             <i class=" fa-brands fa-node-js fa-5x"></i>
           </div>
@@ -40,6 +43,12 @@
               
         <label for="level" class="form-label">Password</label>
           <input type="password" name="password" class="form-control " id="level" placeholder="Password">
+      </div>
+
+      <div class="form-group">
+              
+        <label for="level" class="form-label">Confirm Password</label>
+          <input type="password" name="password2" class="form-control " id="password2" placeholder=" confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>" >
       </div>
         
         <div class="flex-fill">

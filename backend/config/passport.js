@@ -10,16 +10,16 @@ module.exports = function(passport) {
       // Match user
       Student.findOne({
         email: email
-      }).then(student => {
-        if (!student) {
+      }).then(user => {
+        if (!user) {
           return done(null, false, { message: 'That Email Is Not Registered' });
         }
 
         // Match password
-        bcrypt.compare(password, student.password, (err, isMatch) => {
+        bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) throw err;
           if (isMatch) {
-            return done(null, student);
+            return done(null, user);
           } else {
             return done(null, false, { message: 'Password Incorrect' });
           }
@@ -28,13 +28,13 @@ module.exports = function(passport) {
     })
   );
 
-  passport.serializeUser(function(student, done) {
-    done(null, student.id);
+  passport.serializeUser(function(user, done) {
+    done(null, user);
   });
 
   passport.deserializeUser(function(id, done) {
-    Student.findById(id, function(err, student) {
-      done(err, student);
+    Student.findById(id, function(err, user) {
+      done(err, user);
     });
   });
 };

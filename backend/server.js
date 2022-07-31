@@ -19,7 +19,7 @@ const connectDB = require('./config/db');
 
 
 
-// connectDB();
+connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 
@@ -59,23 +59,28 @@ next();
 
   })
 
+
+app.set('view engine' , 'ejs');
+// app.set('views' , 'backend/views');
+app.set('views', path.join(__dirname, 'views'));
+
 //Student Routing
 app.use('/api/student',require('./routes/studentRoutes'))
 //Goals Routing
 app.use('/api/goal',require('./routes/goalRoutes'))
 //Skill set Routing
 app.use('/api/skill',require('./routes/skillRoutes'))
+ //Using a template engine  
 
-app.set('view engine' , 'ejs');
-// app.set('views' , 'backend/views');
-app.set('views', path.join(__dirname, 'views'));
 
 //RENDERING MY EJS VIEWS
 app.get('/', (req,res) =>{res.render('home')})
 app.get('/register', (req,res) =>{res.render('register')})
 app.get('/login', (req,res) =>{res.render('login')})
 app.get('/logout', (req,res) =>{res.render('logout')})
-app.get('/dashboard', (req,res) =>res.render('dashboard')  )
+app.get('/setgoal', (req,res) =>{res.render('setGoal')});
+
+app.get('/dashboard', ensureAuthenticated,(req,res) =>res.render('dashboard')  )
 
 
 

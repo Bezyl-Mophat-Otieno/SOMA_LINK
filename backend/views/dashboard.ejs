@@ -8,10 +8,29 @@
     <h4 class="container  "> STUDENT ACADEMIC RADAR</h4>
   </header>
 
+  <%- include('./partials/messagePrompts.ejs') %> 
+
+
   <div class="home_icon_dashboard" >
     <span class="fa-solid fa-graduation-cap fa-10x"></span>
   </div>
 
+   <!-- Toast -->
+
+   <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      This is where a goal will be placed.
+    </div>
+  </div>
+
+
+  <!-- navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,8 +77,13 @@
   <%- include('./partials/skillModal.ejs') %> 
 
   <div class="welcome-text container">
-    <p >W e l c o m e</p>
+    <p >W e l c o m e  </p> 
   </div>
+  <div class="user-text container">
+    <div class="alert alert-success  alert-dismissible fade show" role="alert">
+    </div>
+  </div>
+
   <footer>
     <!-- footer -->
     <%- include('./partials/footer.ejs') %> 

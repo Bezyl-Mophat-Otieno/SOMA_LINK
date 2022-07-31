@@ -1,15 +1,16 @@
 module.exports = {
-
-ensureAuthenticated : (req , res, next)=>{
-
-if(req.isAuthenticated()){
-    return next
-}
- req.flash('error_msg' , 'Kindly log-in to access this resource');
- res.redirect('/login');
-
-}
-
-
-    
-}
+    ensureAuthenticated: function(req, res, next) {
+      if (req.isAuthenticated()) {
+        return next();
+      }
+      req.flash('error_msg', 'Please log in to view that resource');
+      res.redirect('/login');
+    },
+    forwardAuthenticated: function(req, res, next) {
+      if (!req.isAuthenticated()) {
+        return next();
+      }
+      res.redirect('/dashboard');      
+    }
+  };
+  
