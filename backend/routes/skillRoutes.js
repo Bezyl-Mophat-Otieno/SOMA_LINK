@@ -5,7 +5,7 @@ const {protect} = require('../middleware/authenticationMiddleware')
 
 
 
-router.post('/',protect,addSkill);
-router.get('/',protect,mySkills);
+router.post('/',addSkill);
+router.get('/',mySkills);
 
 module . exports = router

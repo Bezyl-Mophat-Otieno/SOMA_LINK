@@ -12,6 +12,13 @@
               <h4 class="container  border border-secondary rounded-pill"> STUDENT ACADEMIC RADAR</h4>
 
                    <div class=" home_icon">
+
+                    <i id="spin" role="status"></i>
+  
+
+              <div >
+
+              </div>
                     <i class=" home_icon fa-solid fa-id-card fa-5x "></i>
 
                    </div>
@@ -24,7 +31,7 @@
               <div  class="form-group">
               
                 <label for="email" class="form-label ">Email address</label>
-                <input type="email"  name="email" class="form-control " id="email" placeholder="name@example.com" value="<%= typeof email != 'undefined' ? email : '' %>">
+                <input type="email" name="email" class="form-control " id="email" placeholder="name@example.com" value="<%= typeof email != 'undefined' ? email : '' %>">
               </div>
               
               
@@ -32,12 +39,12 @@
               <div class="form-group">
               
                 <label for="level" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control " id="level" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" >
+                  <input type="password"    name="password" class="form-control " id="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" >
               </div>
-              <div class=" d-flex ">
-              
+<br>
+              <div class=" d-flex ">  
                 <div class="flex-fill">
-                  <input  type="submit" class=" btn btn-outline-secondary w-20 " id="submit"   value="Login">
+                  <input  type="submit"  class=" btn btn-outline-secondary w-20 " id="submit"   value="Login">
                 </div>
       </div>
               </form>

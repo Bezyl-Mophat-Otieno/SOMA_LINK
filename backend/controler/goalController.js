@@ -10,7 +10,7 @@ let errors = [];
 
     if(!req.body.text){
 res.status(400)
-errors.push({msg:'Kindly fill  in the text field'});
+errors.push({msg:'Kindly Set A  Goal'});
 
 
     }
@@ -32,7 +32,7 @@ res.render('dashboard',{errors})
 
     if(goal){
 
-        res.render('dashboard')
+        res.redirect('/dashboard')
     }
 
 }
@@ -85,7 +85,7 @@ throw new Error ('Student Not Found')
 
 const deleteGoal =asyncHandler ( async (req,res)=>{
 
-    const goal = await Goal.findById(req.params.id)
+    const goal = await Goal.findById(req.params.id).lean()
 
     if(!goal){
         res.status(400)
@@ -101,13 +101,14 @@ throw new Error ('Student Not Found')
 
     //Making sure that the student making the request is the logged in one
 
-    if(goal.student.toString() !== req.student.id){
+    if(goal.student !== req.student.id){
 
         res.status(401)
         throw new Error('Student Not Authorized');
-    }
+    }else{
     await goal.remove();
     res.status(200).json({id:req.params.id});
+    }
 })
 
 // Get goals 

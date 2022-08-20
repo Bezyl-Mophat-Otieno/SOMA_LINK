@@ -6,20 +6,39 @@ const Skill = require('../Models/skillSetModel')
 //@public
 
 const addSkill = asyncHandler( async (req,res)=>{
+let errors = []
+
     if(!req.body.skill){
 res.status(400)
-throw new Error('Kindly fill  in the text field');
+errors.push({msg:'Kindly Add A Skill'});
+
+    } 
+    
+    if(errors.length > 0){
+        res.render('dashboard',{errors})
+        
+        
+        }else{
+
+        const skill = await Skill.create({
+            student: await req.student.id,
+            skill: await req.body.skill
+    
+    
+    
+        })
+
+        if(skill){
+
+res.redirect('/dashboard')
+
+        }
 
     }
 
-    const skill = await Skill.create({
-        student: await req.student.id,
-        skill: await req.body.skill
+    
 
 
-
-    })
-    res.status(200).json(skill);
 
 })
 

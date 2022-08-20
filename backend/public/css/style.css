@@ -1,0 +1,83 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Edu+VIC+WA+NT+Beginner:wght@700&family=Marck+Script&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Marck+Script&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&display=swap');
+/* 
+font-family: 'Edu VIC WA NT Beginner', cursive;
+
+font-family: 'Source Code Pro', monospace;
+
+<i class="fa-solid fa-arrow-right-to-arc"></i>
+<i class="fa-light fa-id-card"></i>
+<i class="fa-light fa-arrow-right-to-bracket"></i> */
+form{
+  font-family: 'Edu VIC WA NT Beginner', cursive;
+}
+
+a{
+  text-decoration: none;
+text-align: center;
+color: grey;
+  
+}
+
+.home_icon{
+  text-align: center;
+  margin-top: 1cm;
+
+
+}
+.home_icon_dashboard{
+  text-align: center;
+  margin-top: 1cm;
+  color: rgb(230, 130, 9);
+
+}
+.welcome-text{
+    margin-top: 1cm;
+    text-align: center;
+    font-size: 100px;
+
+    font-family: 'Comfortaa', cursive;   
+ }
+ .user-text{
+    
+    margin-top: 1cm;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Righteous', cursive;
+
+ }
+
+h4 {
+    font-family: 'Comfortaa', cursive;   
+margin-left: 11.5cm;
+margin-right: 11.5cm;
+text-align: center;
+
+}
+
+.form-label {
+color: rgb(230, 130, 9);
+
+}
+.modal-title{
+
+font-family: 'Edu VIC WA NT Beginner', cursive;
+}
+
+.alert{
+text-align: center;
+
+height: 1.3cm;
+}
+#edit-icon{
+
+  color: rgb(230, 130, 9);
+
+
+}

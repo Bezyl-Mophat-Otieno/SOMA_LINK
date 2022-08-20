@@ -49,7 +49,7 @@ if (errors.length > 0) {
             const studentExist =await Student.findOne({email});
             if(studentExist){
 res.status(400)
-errors.push({msg:"Student already exists"})
+errors.push({msg:'Student already exists'})
 
 res.render('register', {
     errors,

@@ -5,35 +5,52 @@
 
 </head>
 <body>
-<header>
-  <h4 class="container  "> STUDENT ACADEMIC RADAR</h4>
-</header>
- 
+<div class="container">
+<div class="row border border-secondary align-items-center ">
 
-    <div class="home_icon" >
-      <span class="fa-solid fa-graduation-cap fa-10x"></span>
+  <div class="">
+
+    <header>
+      <h4 class="container"> STUDENT ACADEMIC RADAR</h4>
+    </header>
+     
+    
+        <div class="home_icon" >
+          <span class="fa-solid fa-graduation-cap fa-10x"></span>
+        </div>
+    
+    <!-- Button trigger modal -->
+    
+    <div class="d-flex justify-content-center mt-4">
+    
+      <div class=""  >
+        <a   data-bs-toggle="modal" class="modal_toggler btn btn-outline-secondary rounded m-2 " href="#staticBackdrop">REGISTER</a>
     </div>
+    
+    <div  class="">
+      <a  data-bs-toggle="modal" class="btn btn-outline-secondary rounded m-2" href="#staticBackdrop1"> LOG-IN</a>
+    </div>
+    
+    </div>
+      <!-- Modals -->
+    <%- include('./partials/registerModal.ejs') %> 
+    <%- include('./partials/loginModal.ejs') %> 
+    
 
-<!-- Button trigger modal -->
-<div class="container  ">
 
-<div class="d-flex justify-content-center mt-4">
 
-  <div class=""  >
-    <a   data-bs-toggle="modal" class="modal_toggler btn btn-outline-secondary rounded m-2 " href="#staticBackdrop">REGISTER</a>
+  
+
+
 </div>
 
-<div  class="">
-  <a  data-bs-toggle="modal" class="btn btn-outline-secondary rounded m-2" href="#staticBackdrop1"> LOG-IN</a>
-</div>
 
 </div>
-  <!-- Modals -->
-<%- include('./partials/registerModal.ejs') %> 
-<%- include('./partials/loginModal.ejs') %> 
+
 <footer>
-<!-- footer -->
-<%- include('./partials/footer.ejs') %> 
-</footer>
+  <!-- footer -->
+  <%- include('./partials/footer.ejs') %> 
+  </footer>
+
 </body>
 </html>

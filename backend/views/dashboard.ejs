@@ -7,11 +7,13 @@
   <header>
     <h4 class="container  "> STUDENT ACADEMIC RADAR</h4>
   </header>
-
+  
   <%- include('./partials/messagePrompts.ejs') %> 
 
 
+
   <div class="home_icon_dashboard" >
+
     <span class="fa-solid fa-graduation-cap fa-10x"></span>
   </div>
 
@@ -75,13 +77,38 @@
 <!-- //setGoal Modal && setSkill Modal -->
   <%- include('./partials/goalModal.ejs') %> 
   <%- include('./partials/skillModal.ejs') %> 
+<section>
+<% if(goals.length > 0) { %> 
 
-  <div class="welcome-text container">
-    <p >W e l c o m e  </p> 
-  </div>
-  <div class="user-text container">
-    <div class="alert alert-success  alert-dismissible fade show" role="alert">
-    </div>
+
+ 
+      <div class="row">
+
+    <% goals.forEach((goal)=> { %>
+
+        <div class="col">
+          <div class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title"><%= goal.createdAt %> </h5>
+              <p class="card-text"><%= goal.text %> </p>
+              <a href="#" id="edit-icon" ><i class="fa-solid  fa-pen-to-square"></i></a>
+            </div>
+          </div>
+        </div>
+      
+  <% }); %>
+
+
+  <% } else{ %>
+
+    <div class="user-text container">
+      <div class="alert alert-success  alert-dismissible fade show" role="alert">
+               <b>Welcome <%= student.name %> , You Have Not Set Any Goal</b>
+      </div>    
+    <% } %> 
+</section>
+
+
   </div>
 
   <footer>

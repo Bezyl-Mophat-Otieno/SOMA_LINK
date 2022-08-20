@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('./partials/head.ejs',{title:'SET GOAL'}) %> 
-
-
+    <%- include('./partials/head.ejs',{title:'UPDATE GOAL'}) %> 
 
 </head>
 <body>
@@ -21,13 +19,15 @@
         <div  class="form-group">
       
             <label for="exampleFormControlTextarea1" class="form-label">Lets Get Started</label>
-            <textarea class="form-control" name="text" id="text" rows="2"></textarea>
+            <textarea class="form-control" oninput="spin()" name="text" id="text" rows="2"  ></textarea>
           
         </div>
-        
-        <div class="spinner-border" role="status"  >
-            
-        </div>
+
+        <div id="spin">
+          
+          
+          </div>
+       
     
             <div class=" d-flex ">
           <div class="flex-fill">
