@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('./partials/head.ejs',{title:'DASHBOARD'}) %> 
-</head>
-<body>
+
   <header>
     <h4 class="container  "> STUDENT ACADEMIC RADAR</h4>
   </header>
@@ -17,104 +12,60 @@
     <span class="fa-solid fa-graduation-cap fa-10x"></span>
   </div>
 
-   <!-- Toast -->
-
-   <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      This is where a goal will be placed.
-    </div>
-  </div>
-
-
-  <!-- navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/student/logout">Log-out</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Goals
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" data-bs-toggle="modal" href="#setGoal">Set Goal</a></li>
-              <li><a class="dropdown-item" href="#">Modify Goal</a></li>
-              <li><a class="dropdown-item" href="#">Delete Goal</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">My Goals</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Skills
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" data-bs-toggle="modal" href="#setSkill">Add Skill</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">My Skills</a></li>
-            </ul>
-          </li>
-
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-<!-- //setGoal Modal && setSkill Modal -->
-  <%- include('./partials/goalModal.ejs') %> 
-  <%- include('./partials/skillModal.ejs') %> 
-<section>
-<% if(goals.length > 0) { %> 
-
-
+  
+<%- include ('./partials/header.ejs') %> 
  
-      <div class="row">
-
-    <% goals.forEach((goal)=> { %>
-
-        <div class="col">
-          <div class="card w-75">
-            <div class="card-body">
-              <h5 class="card-title"><%= goal.createdAt %> </h5>
-              <p class="card-text"><%= goal.text %> </p>
-              <a href="#" id="edit-icon" ><i class="fa-solid  fa-pen-to-square"></i></a>
+<section>
+  
+  <div class="row row-cols">
+<% if(goals.length > 0) { %> 
+  <% goals.forEach((goal)=> { %>
+    
+    
+    <div class="col">
+      <div class="card mb-5 mt-5 shadow rounded m-auto ">
+        <div class="card-body">
+          <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> SET-ON : </b> <%- goal.createdAt %>  </h5>
+          <hr class="dropdown-divider">
+          <p class="card-text"> <%- goal.text %></p>
+          
+          <div class="d-flex justify-content-end mt-1">
+            <div>
+              <a  href="/api/goal/updateForm/:<%- goal._id %>"  class="btn btn-outline-success rounded-pill m-auto"><i class="fas fa-edit"></i></a>
+            </div>
+             <div>
+               <form action="/api/goal/<%- goal._id %>" method="POST" id="delete-form">
+                 <input type="hidden" name="_method" value="DELETE">
+                 <button type="submit" class="btn btn-outline-danger rounded-pill " >
+                     <i class="fas fa-trash"></i>
+                 </button>
+               </form>
             </div>
           </div>
+        
         </div>
+      </div>
+    </div>
+  
+    
       
-  <% }); %>
+
+    
+
+    
+        <% }); %>
+      
 
 
   <% } else{ %>
 
-    <div class="user-text container">
-      <div class="alert alert-success  alert-dismissible fade show" role="alert">
-               <b>Welcome <%= student.name %> , You Have Not Set Any Goal</b>
-      </div>    
+    
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      Welcome On Board  <strong><%- student.name %>.  </strong>Lets Get Started ! 
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <% } %> 
 </section>
-
-
   </div>
 
-  <footer>
-    <!-- footer -->
-    <%- include('./partials/footer.ejs') %> 
-    </footer>
-    
-</body>
-</html>
+ 

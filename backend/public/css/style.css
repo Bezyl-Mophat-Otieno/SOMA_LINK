@@ -14,6 +14,7 @@ font-family: 'Source Code Pro', monospace;
 <i class="fa-solid fa-arrow-right-to-arc"></i>
 <i class="fa-light fa-id-card"></i>
 <i class="fa-light fa-arrow-right-to-bracket"></i> */
+
 form{
   font-family: 'Edu VIC WA NT Beginner', cursive;
 }
@@ -37,6 +38,12 @@ color: grey;
   color: rgb(230, 130, 9);
 
 }
+#category{
+  color: rgb(230, 130, 9);
+  font-family: 'Comfortaa', cursive;   
+
+  text-decoration: underline;
+  }
 .welcome-text{
     margin-top: 1cm;
     text-align: center;
@@ -62,22 +69,64 @@ text-align: center;
 }
 
 .form-label {
-color: rgb(230, 130, 9);
+  color: rgb(230, 130, 9);
+  font-family: 'Comfortaa', cursive;   
 
+  text-decoration: underline;
 }
 .modal-title{
 
 font-family: 'Edu VIC WA NT Beginner', cursive;
 }
 
+
+.card-title2{
+  color: rgb(230, 130, 9);
+  font-family: 'Comfortaa', cursive;   
+
+  text-decoration: underline;
+  }
+
 .alert{
 text-align: center;
 
 height: 1.3cm;
 }
-#edit-icon{
 
-  color: rgb(230, 130, 9);
+
+.btn-float {
+  float: left;
+  margin-right: 10px;
+} 
+.col-5{
+  text-decoration: underline;
+  text-align: right;
+}
+
+.skill__link {
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  transition: 250ms all;
+}
+
+.skill__link:hover {
+  transform: scale(1.1);
+}
+.skill__card:hover{
+  color: black;
+}
+
+.goal__card {
+  color:white
+
+}
+.home_background {
+background-image: url('/backend/public/images/homePage.jpg');
+background-repeat: no-repeat;
+background-size: cover; 
+--bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+
 
 
 }

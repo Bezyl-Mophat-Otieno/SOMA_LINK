@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include ('./partials/head.ejs', {title:'HOME'}) %> 
 
-</head>
-<body>
 <div class="container">
 <div class="row border border-secondary align-items-center ">
 
@@ -22,7 +16,7 @@
     <!-- Button trigger modal -->
     
     <div class="d-flex justify-content-center mt-4">
-    
+  
       <div class=""  >
         <a   data-bs-toggle="modal" class="modal_toggler btn btn-outline-secondary rounded m-2 " href="#staticBackdrop">REGISTER</a>
     </div>
@@ -35,22 +29,9 @@
       <!-- Modals -->
     <%- include('./partials/registerModal.ejs') %> 
     <%- include('./partials/loginModal.ejs') %> 
+
     
-
-
-
-  
-
-
+    
+</div>
 </div>
 
-
-</div>
-
-<footer>
-  <!-- footer -->
-  <%- include('./partials/footer.ejs') %> 
-  </footer>
-
-</body>
-</html>

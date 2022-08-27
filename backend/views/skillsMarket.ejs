@@ -1,0 +1,61 @@
+
+  <!-- navbar -->
+   <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/student/logout">Log-out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
+          </li>
+          <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded-pill m-auto position-relative">
+            MY-SKILLS
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <%= myTotalSkills %> 
+            </span>
+          </a>
+          <li class="nav-item">
+            <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
+          </li>
+        </ul>
+        <form class="d-flex" action="/search" method="POST">
+          <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+      </div>
+  </nav>
+ 
+
+<!-- setSkill Modal -->
+ <%- include('./partials/skillModal.ejs') %> 
+<div class="row row-cols-1 row-cols-md-3">
+  
+  <%if(skillsInTheMarket.length > 0){ %>
+   <%skillsInTheMarket.forEach((skill)=>{ %>
+    
+    <div class="col  gx-1">
+      <a href="http://localhost:8000/api/skill/mySkills/<%-skill.student  %> " class="card skill__card mb-5 mt-5 shadow rounded m-auto skill__link ">
+        <div class="card-body ">
+          <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> ADDED-ON : </b>   <%- skill.createdAt %>  </h5>
+          <h5 class="card-title2">  <%- skill.status %>  </h5>
+          <p class="card-text"> <%- skill.skill %></p>
+          <a data-bs-toggle="modal" href="#sendMail" class="btn btn-success rounded-pill " ><%-skill.student  %> </a>
+        </div>
+      </a>
+
+    </div>
+  <%- include('./partials/mailModal.ejs') %> 
+
+
+<%});%>
+<% }else {%>
+
+  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Career-Oriented Skills Are Yet To Be Added By Other Users </h1>
+  
+
+  <% } %>
+</div>

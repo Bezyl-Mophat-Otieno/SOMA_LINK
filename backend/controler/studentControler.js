@@ -35,6 +35,7 @@ let errors = [];
 
 if (errors.length > 0) {
     res.render('register', {
+      title:'REGISTER',
       errors,
       name,
       email,
@@ -51,7 +52,8 @@ if (errors.length > 0) {
 res.status(400)
 errors.push({msg:'Student already exists'})
 
-res.render('register', {
+res.render('register',  {
+  title:'REGISTER',
     errors,
     name,
     email,
@@ -79,7 +81,7 @@ password:hashedPassword
 if(student){
 
   //Flash a message before redirecting 
-  req.flash('success_msg', 'Registration Successful ! , You can now login .')
+  req.flash('success_msg', 'Registration Successful ! You can now login .')
   res.redirect('/login');
   }
 
@@ -114,7 +116,8 @@ if( !email ||!password){
 
 // re-render login page displaying the data keyed in.
 if (errors.length > 0) {
-res.render('login', {
+res.render('login',  {
+  title:'LOGIN',
 errors,
 email,
 password
@@ -149,32 +152,12 @@ res.redirect('/login');
 
 }) 
 
-// Generate web Token
-const generateToken = (id)=>{
-return jwt.sign({id},process.env.JWT_SECRET_KEY,{expiresIn:'30d'});
 
-};
-
-
-//@desc get student Data
-//@route GET /api/students/login/me
-//@ access PRIVATE
-const getStudentData= asyncHandler(async  (req,res)=>{
-    res.status(200).json( await req.student );
-    
-    })
-
-
-
-
-
-            
     
     
 
     module.exports={
 
-getStudentData,
 registerStudent,
 studentLogin,
 studentLogout

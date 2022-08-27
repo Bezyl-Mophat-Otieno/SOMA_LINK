@@ -1,0 +1,86 @@
+  <!-- navbar -->
+<%- include('./partials/messagePrompts.ejs') %> 
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
+          </li>
+            <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded-pill position-relative m-auto">
+              SKILLS MARKET
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= totalSkillsInTheMarket %> 
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </a>
+        </ul>
+        <form class="d-flex" action="http://localhost:8000/search" method="POST">
+          <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+ <!-- setSkill Modal -->
+ <%- include('./partials/skillModal.ejs') %> 
+
+ <%if(mySkills.length > 0){ %>
+  <% 
+   let firstSkill = mySkills[0];
+  let studentEmail = firstSkill.student; 
+  %>
+<div class="d-flex justify-content-center mt-5">
+  <a href="#" class="btn btn-outline-success rounded-pill ms-1 text-truncate" style="max-width: 100px;" type="submit"><%- studentEmail %></a>
+</div>
+
+
+
+<% } %>
+
+
+<div class="row row-cols-1 row-cols-md-3">
+  
+  <%if(mySkills.length > 0){ %>
+   <%mySkills.forEach((skill)=>{ %>
+
+
+    <div class="col  ">
+      <div class="card mb-5 mt-5 shadow rounded m-auto ">
+        <div class="card-body">
+          <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> ADDED-ON : </b> <%- skill.createdAt %>  </h5>
+          <h5 class="card-title2">  <%- skill.status %>  </h5>
+          <p class="card-text"> <%- skill.skill %></p>
+          <div class=" col-md-12 d-flex justify-content-end mt-1">
+             <div>
+               <form action="/api/skill/<%- skill._id %>" method="POST" id="delete-form">
+                 <input type="hidden" name="_method" value="DELETE">
+                 <button type="submit" class="btn btn-outline-danger d- " >
+                     <i class="fas fa-trash"></i>
+                 </button>
+               </form>
+            </div>
+          </div>
+        
+
+        </div>
+      </div>
+    </div>
+  
+
+
+<%});%>
+<% }else {%>
+
+  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No skills Added</h1>
+  
+
+  <% } %>
+</div>

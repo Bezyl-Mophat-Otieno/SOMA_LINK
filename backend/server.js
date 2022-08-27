@@ -1,8 +1,9 @@
 const express = require('express')
+const app =express();
 const mongoose= require('mongoose');
 const morgan = require('morgan')
 const path = require('path')
-const app =express();
+const methodOverride = require('method-override');
 const dotenv = require('dotenv').config();
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -11,9 +12,10 @@ const PORT =process.env.PORT || 8000;
 const passport = require('passport')
 const Goal = require ('./Models/goalModel')
 const Skill = require ('./Models/skillSetModel')
+const expressLayouts = require('express-ejs-layouts');
 
  
-//Using morgan (' whenever a request  is made on  any route the route is consoled on the terminal')
+//Using morgan (' whenever a request  is made on  any route the route path is consoled on the terminal')
 
 if(process.env.NODE_ENV === 'development'){
   app.use(morgan('dev'));
@@ -38,6 +40,17 @@ app.use(express.json());
 
 //adding a form handling data middleware
 app.use(express.urlencoded({extended:false}));
+
+//Using method-Override since we cannot make PUT or DELETE requests when submitting forms.
+
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 
  //Express session Middleware
@@ -75,43 +88,26 @@ next();
 
   app.use(express.static(path.join(__dirname , 'public')))
 
+   //Using a template engine  
+
 app.set('view engine' , 'ejs');
 // app.set('views' , 'backend/views');
 app.set('views', path.join(__dirname, 'views'));
+// ejs layouts 
+app.use (expressLayouts);
+app.set('layout','./layouts/main' );
 
 //Student Routing
+app.use('/',require('./routes/indexRoutes'))
 app.use('/api/student',require('./routes/studentRoutes'))
 //Goals Routing
 app.use('/api/goal',require('./routes/goalRoutes'))
 //Skill set Routing
 app.use('/api/skill',require('./routes/skillRoutes'))
- //Using a template engine  
+//TESTING GOOGLE AUTH
+app.use('/auth',require('./routes/studentRoutes' ))
 
-
-//RENDERING MY(predefined-routes) EJS VIEWS
-app.get('/',forwardAuthenticated, (req,res) =>{res.render('home')})
-app.get('/register', (req,res) =>{res.render('register')})
-app.get('/login',(req,res) =>{res.render('login')})
-app.get('/logout', (req,res) =>{res.render('logout')})
-app.get('/setgoal', ensureAuthenticated , (req,res) =>{res.render('setGoal')});
-app.get('/dashboard', ensureAuthenticated,async (req,res) => {
-
-  try {
-    const goals = await Goal.find({student:req.user.id}).lean()
-    const skills = await Skill.find({student:req.user.id}).lean()
-
-    res.render('dashboard', {student:req.user, goals })
-
-  } catch (error) {
-    console.error(error)
-    
-  }
-
- } )
-
-
-
-
+app.get
 
 app.listen(PORT,()=>{
 

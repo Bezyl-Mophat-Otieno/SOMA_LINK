@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include ('./partials/head.ejs',{title:'LOGIN'}) %> 
 
-</head>
-<body>
 
       <div class="container">
 
@@ -31,7 +25,7 @@
               <div  class="form-group">
               
                 <label for="email" class="form-label ">Email address</label>
-                <input type="email" name="email" class="form-control " id="email" placeholder="name@example.com" value="<%= typeof email != 'undefined' ? email : '' %>">
+                <input type="email" name="email" class="form-control " id="email" placeholder="name@example.com" value="<%- typeof email != 'undefined' ? email : '' %>">
               </div>
               
               
@@ -39,7 +33,7 @@
               <div class="form-group">
               
                 <label for="level" class="form-label">Password</label>
-                  <input type="password"    name="password" class="form-control " id="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" >
+                  <input type="password"    name="password" class="form-control " id="password" placeholder="Password" value="<%- typeof password != 'undefined' ? password : '' %>" >
               </div>
 <br>
               <div class=" d-flex ">  
@@ -50,9 +44,3 @@
               </form>
               <p   class="lead mt-4  text-muted"> <small> Do Not Have An Account?</small>  <a class="form-label" href="/register"> <small>Register</small> </a></p></small>
 
-              <footer>
-                <!-- footer -->
-                <%- include('./partials/footer.ejs') %> 
-                </footer>
-</body>
-</html>

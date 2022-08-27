@@ -1,0 +1,52 @@
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+    <!-- <img src="/images/rovenlogos_techglass_light.png" width="220" height="65" alt="WEB APP lOGO"> -->
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/student/logout">Log-out</a>
+          </li>
+          <li class="nav-item dropend">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              GOALS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" data-bs-toggle="modal" href="#setGoal">Set Goal</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="">My Goals</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropend">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              SKILLS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" data-bs-toggle="modal" href="#setSkill">Add Skill</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a aria-current="page" href="http://localhost:8000/mySkills" class="btn  rounded-pill position-relative">My Skills</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="http://localhost:8000/api/skill/skillsMarket"> Skills Market</a></li>
+            </ul>
+          </li>
+
+        </ul>
+        <form class="d-flex" action="http://localhost:8000/search" method="POST">
+          <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+
+          <a href="http://localhost:8000/mySkills" class="btn btn-success ms-1 text-truncate" style="max-width: 100px;" type="submit"><%- student.name %> </a>
+
+        </form>
+
+      </div>
+    </div>
+  </nav>
+<!-- //setGoal Modal && setSkill Modal -->
+  <%- include('./goalModal.ejs') %> 
+  <%- include('./skillModal.ejs') %> 

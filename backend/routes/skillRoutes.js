@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router(); 
-const {addSkill,mySkills} = require('../controler/skillController');
+const {addSkill,findSkills , userSkills ,deleteSkill } = require('../controler/skillController');
 const {protect} = require('../middleware/authenticationMiddleware')
+const {ensureAuthenticated , forwardAuthenticated} = require ('../config/auth.js');
 
 
-
-router.post('/',addSkill);
-router.get('/',mySkills);
-
+router.post('/',ensureAuthenticated,addSkill);
+router.get('/skillsMarket',ensureAuthenticated,findSkills);
+router.get('/mySkills/:email', ensureAuthenticated , userSkills)
+router.delete('/:id', ensureAuthenticated, deleteSkill )
 module . exports = router

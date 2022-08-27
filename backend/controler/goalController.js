@@ -6,23 +6,19 @@ const Student = require('../Models/studentModel')
 //@public
 
 const setGoal = asyncHandler( async (req,res)=>{
+const goals = await Goal.find({student:req.user.id}).lean()
 let errors = [];
+const {text} = req.body;
 
-    if(!req.body.text){
+    if(!text){
 res.status(400)
-errors.push({msg:'Kindly Set A  Goal'});
+errors.push({msg:'Kindly Enter Information In All Fields'});
+res.render('dashboard',{errors,goals})
+
+    } else{
 
 
-    }
-
-if(errors.length > 0){
-res.render('dashboard',{errors})
-
-
-} else{
-
-
-    const goal = await Goal.create({
+    let goal = await Goal.create({
         student: await req.user.id,
         text: await req.body.text
 
@@ -39,44 +35,83 @@ res.render('dashboard',{errors})
 })
 
 
-//@update a goal
-//route PUT api/goal/:id
+//@display Goal Update Form
+//route GET api/goal/updateForm/:id
 //@private
 
 
-const updateGoal =asyncHandler ( async (req,res)=>{
+const updateGoalForm =asyncHandler ( async (req,res)=>{
 
-    const goal = await Goal.findById(req.params.id)
+    let goal = await Goal.findOne({id:req.params.id}).lean()
 
     if(!goal){
         res.status(400)
-        throw new Error('Goal not Found');
-    }
-    //check for student who made the request of updating the goal
-    // check the logged in student
-const student = Student.findById(req.student.id);
-
-
-    if(!req.student){
-res.status(401)
-throw new Error ('Student Not Found')
-
-    }
-
+        res.render('error/404',{title:'404'});
+        return
+    } else{
     //Making sure that the student making the request is the logged in one
-
-    if(goal.student.toString() !== req.student.id){
-
+    if(goal.student != req.user.id){
         res.status(401)
-        throw new Error('Student Not Authorized');
+        res.render('error/500',{title:'500'});
+        return
+    } else{
+// console.log(goal.student);
+// console.log(req.user.id)
+
+    res.render('updateGoal' , {title:'UPDATE' , goal})
+    
+
+    return
+
     }
-    const updatedGoal = await Goal.findByIdAndUpdate(req.params.id ,req.body , {new:true} );
-    res.status(200).json(updatedGoal);
+    }
+    
+
+    
 
 
 
 
 })
+
+
+//@Process Goal Update Form
+//route PUT api/goal/update/:id
+//@private
+
+
+const updateGoal =asyncHandler ( async (req,res)=>{
+
+    let goal = await Goal.findById(req.params.id).lean()
+
+    if(!goal){
+        res.status(400)
+        res.render('error/404',{title:'404'});
+        return
+    }else{
+    //Making sure that the student making the request is the logged in one
+
+    if(goal.student != req.user.id){
+
+        res.status(401)
+        res.render('error/404',{title:'404'});
+        return
+    } else{
+           goal = await Goal.findOneAndUpdate({_id:req.params.id} , req.body , {new:true ,validators:true} );
+    res.redirect('/dashboard')
+    return
+
+    }
+    }
+    
+    
+
+
+
+
+})
+
+
 
 
 //@delete a goal
@@ -85,30 +120,29 @@ throw new Error ('Student Not Found')
 
 const deleteGoal =asyncHandler ( async (req,res)=>{
 
-    const goal = await Goal.findById(req.params.id).lean()
+    let goal = await Goal.findById(req.params.id).lean()
 
     if(!goal){
         res.status(400)
-        throw new Error('Goal not Found');
-    }
-    //check for student who made the request of updating the goal
+        res.render('error/404',{title:'404'});
+    }else{
 
-    if(!req.student){
-res.status(401)
-throw new Error ('Student Not Found')
-
-    }
 
     //Making sure that the student making the request is the logged in one
 
-    if(goal.student !== req.student.id){
+    if(goal.student != req.user.id){
 
         res.status(401)
-        throw new Error('Student Not Authorized');
+        res.render('error/404');
     }else{
-    await goal.remove();
-    res.status(200).json({id:req.params.id});
+    await Goal.remove({_id:req.params.id});
+    res.redirect('/dashboard')
     }
+
+
+    }
+    
+
 })
 
 // Get goals 
@@ -123,4 +157,4 @@ const getGoals =asyncHandler (async(req , res )=>{
     res.status(200).json(goals);
 })
 
-module . exports = {setGoal,updateGoal,deleteGoal,getGoals}
+module.exports = {setGoal,updateGoalForm,updateGoal,deleteGoal,getGoals}
