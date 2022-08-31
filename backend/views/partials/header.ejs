@@ -34,10 +34,15 @@
               <li><a class="dropdown-item" href="http://localhost:8000/api/skill/skillsMarket"> Skills Market</a></li>
             </ul>
           </li>
+          <li>
+            <a aria-current="page" href="http://localhost:8000/messaging/inbox" class="btn btn-outline-secondary rounded-pill position-relative m-auto">
+            inbox
+            <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"><i class="fa-solid fa-envelope-open-text"></i></span> </a> 
 
+          </li>
         </ul>
         <form class="d-flex" action="http://localhost:8000/search" method="POST">
-          <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2" type="search"  name="search" placeholder="search" aria-label="Search">
           <button class="btn btn-outline-secondary" type="submit">Search</button>
 
           <a href="http://localhost:8000/mySkills" class="btn btn-success ms-1 text-truncate" style="max-width: 100px;" type="submit"><%- student.name %> </a>

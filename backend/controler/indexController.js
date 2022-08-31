@@ -21,11 +21,12 @@ const nodemailer = require('nodemailer')
 //private route
 const mySkills = asyncHandler( async (req,res) =>{
 
+    let loggedInUser = req.user.email ;
   let mySkills = await Skill.find({student : req.user.email});
   
 
     const totalSkillsInTheMarket = await Skill.countDocuments();
-    res.render('mySkills', { title:'MY-SKILLS',totalSkillsInTheMarket , mySkills});
+    res.render('mySkills', { title:'MY-SKILLS',totalSkillsInTheMarket , mySkills , loggedInUser});
 
 })
 
@@ -109,7 +110,7 @@ const sendMail = asyncHandler ( async ( req,res) =>{
 
   // setup email data with unicode symbols
   let mailOptions = {
-      from: `"Nodemailer Contact" <bezylmophatotieno@gmail.com>`, // sender address
+      from: `"Nodemailer Contact" ${req.user.email}`, // sender address
       to: 'edwina.ferry63@ethereal.email', // list of receivers
       subject: 'Node Contact Request', // Subject line
       text: 'Hello world?', // plain text body

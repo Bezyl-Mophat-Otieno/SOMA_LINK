@@ -50,9 +50,10 @@ const updateGoalForm =asyncHandler ( async (req,res)=>{
         return
     } else{
     //Making sure that the student making the request is the logged in one
-    if(goal.student != req.user.id){
+    if(goal.student!= req.user.id){
         res.status(401)
         res.render('error/500',{title:'500'});
+   
         return
     } else{
 // console.log(goal.student);

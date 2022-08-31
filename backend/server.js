@@ -104,6 +104,9 @@ app.use('/api/student',require('./routes/studentRoutes'))
 app.use('/api/goal',require('./routes/goalRoutes'))
 //Skill set Routing
 app.use('/api/skill',require('./routes/skillRoutes'))
+//Messages routing
+
+app.use('/messaging', require('./routes/messageRoutes'))
 //TESTING GOOGLE AUTH
 app.use('/auth',require('./routes/studentRoutes' ))
 

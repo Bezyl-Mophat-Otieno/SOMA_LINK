@@ -1,6 +1,8 @@
 
-  <header>
-    <h4 class="container  "> STUDENT ACADEMIC RADAR</h4>
+  <header >
+    <h4 class="container  text-center "> STUDENT ACADEMIC RADAR</h4>
+    <hr class="dropdown-divider">
+
   </header>
   
   <%- include('./partials/messagePrompts.ejs') %> 
@@ -17,7 +19,7 @@
  
 <section>
   
-  <div class="row row-cols">
+  <div class="row row-cols-1 row-cols-md-3">
 <% if(goals.length > 0) { %> 
   <% goals.forEach((goal)=> { %>
     
@@ -31,7 +33,7 @@
           
           <div class="d-flex justify-content-end mt-1">
             <div>
-              <a  href="/api/goal/updateForm/:<%- goal._id %>"  class="btn btn-outline-success rounded-pill m-auto"><i class="fas fa-edit"></i></a>
+              <a  href="/api/goal/updateForm/<%- goal._id %>"  class="btn btn-outline-success rounded-pill m-auto"><i class="fas fa-edit"></i></a>
             </div>
              <div>
                <form action="/api/goal/<%- goal._id %>" method="POST" id="delete-form">
@@ -59,11 +61,10 @@
 
   <% } else{ %>
 
-    
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      Welcome On Board  <strong><%- student.name %>.  </strong>Lets Get Started ! 
+    <div class="alert alert-warning alert-dismissible text-dark  fade show" role="alert">Welcome On Board  <strong><%- student.name %>.  </strong>Lets Get Started ! 
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+  
     <% } %> 
 </section>
   </div>
