@@ -1,24 +1,27 @@
 const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Student = require('../Models/studentModel')
+const Message = require ('../Models/messageModel')
 //@create a goal
 //route POST api/goal
 //@public
 
 const setGoal = asyncHandler( async (req,res)=>{
 const goals = await Goal.find({student:req.user.id}).lean()
+const myMessages = await Message.find({to:req.user.email}).lean()
+
 let errors = [];
 const {text} = req.body;
 
     if(!text){
 res.status(400)
 errors.push({msg:'Kindly Enter Information In All Fields'});
-res.render('dashboard',{errors,goals})
+res.render('dashboard',{ title: 'DASHBOARD', errors,goals,myMessages})
 
     } else{
 
 
-    let goal = await Goal.create({
+    const goal = await Goal.create({
         student: await req.user.id,
         text: await req.body.text
 
@@ -27,6 +30,7 @@ res.render('dashboard',{errors,goals})
     }) 
 
     if(goal){
+        console.log(goal.student)
 
         res.redirect('/dashboard')
     }
@@ -42,7 +46,7 @@ res.render('dashboard',{errors,goals})
 
 const updateGoalForm =asyncHandler ( async (req,res)=>{
 
-    let goal = await Goal.findOne({id:req.params.id}).lean()
+    let goal = await Goal.findOne({_id:req.params.id}).lean()
 
     if(!goal){
         res.status(400)
@@ -53,11 +57,14 @@ const updateGoalForm =asyncHandler ( async (req,res)=>{
     if(goal.student!= req.user.id){
         res.status(401)
         res.render('error/500',{title:'500'});
-   
+        console.log(goal)
+
+        console.log(req.user._id)
         return
     } else{
-// console.log(goal.student);
-// console.log(req.user.id)
+console.log(goal.student);
+console.log(req.user.id)
+console.log(req.params.id)
 
     res.render('updateGoal' , {title:'UPDATE' , goal})
     

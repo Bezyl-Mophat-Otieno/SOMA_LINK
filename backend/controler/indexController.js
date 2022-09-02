@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Skill = require('../Models/skillSetModel')
+const Message = require('../Models/messageModel')
+
 const nodemailer = require('nodemailer')
 
 // rendering the HOME page
@@ -76,7 +78,9 @@ res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
     try {
       const goals = await Goal.find({student:req.user.id}).lean()
       const myTotalSkills = await Skill.countDocuments({student:req.user.email});
-      res.render('dashboard', {student:req.user, title:'DASHBOARD'  , goals, myTotalSkills})
+      const myMessages = await  Message.find({to:req.user.email}).lean()
+
+      res.render('dashboard', {student:req.user, title:'DASHBOARD'  , goals, myTotalSkills,myMessages})
   
     } catch (error) {
       console.error(error)
@@ -86,51 +90,6 @@ res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
    })
 
 
-   //sending emails through nodemailer
-   //POST /send
-   //private routes
-const sendMail = asyncHandler ( async ( req,res) =>{
-
-  let testAccount = await nodemailer.createTestAccount();
-
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-        user: 'edwina.ferry63@ethereal.email', // generated ethereal user
-        pass: 'SnCWwfvGUcCNVjHKFt' // generated ethereal password
-    },
-    tls:{
-      rejectUnauthorized:false
-    }
-  });
-
-
-
-  // setup email data with unicode symbols
-  let mailOptions = {
-      from: `"Nodemailer Contact" ${req.user.email}`, // sender address
-      to: 'edwina.ferry63@ethereal.email', // list of receivers
-      subject: 'Node Contact Request', // Subject line
-      text: 'Hello world?', // plain text body
-      html: '<p>hello there</p>// html body'
-  };
-
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message sent: %s', info.messageId);   
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-      // res.render('contact', {msg:'Email has been sent'});
-  });
-  
-
-})   
-
 
   
-   module . exports = {mySkills , searching , dashboard , home , register,login , sendMail} 
+   module.exports = {mySkills , searching , dashboard , home , register,login} 
