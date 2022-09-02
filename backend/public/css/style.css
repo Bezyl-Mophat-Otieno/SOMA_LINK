@@ -62,17 +62,14 @@ color: grey;
 
 h4 {
     font-family: 'Comfortaa', cursive;   
-margin-left: 11.5cm;
-margin-right: 11.5cm;
-text-align: center;
+    font-size:30px ;
 
 }
 
-.form-label {
+.form-label,.alert {
   color: rgb(230, 130, 9);
   font-family: 'Comfortaa', cursive;   
 
-  text-decoration: underline;
 }
 .modal-title{
 
@@ -87,11 +84,6 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
   text-decoration: underline;
   }
 
-.alert{
-text-align: center;
-
-height: 1.3cm;
-}
 
 
 .btn-float {
@@ -121,12 +113,4 @@ height: 1.3cm;
   color:white
 
 }
-.home_background {
-background-image: url('/backend/public/images/homePage.jpg');
-background-repeat: no-repeat;
-background-size: cover; 
---bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 
-
-
-}

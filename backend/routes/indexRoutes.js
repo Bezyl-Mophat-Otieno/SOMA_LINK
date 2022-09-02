@@ -15,7 +15,6 @@ router.get('/login',login)
 router.get('/mySkills', ensureAuthenticated ,mySkills);
 router.post('/search', ensureAuthenticated ,searching);
 router.get('/dashboard', ensureAuthenticated,dashboard );
-router.post('/send',ensureAuthenticated,sendMail)
 
 
 

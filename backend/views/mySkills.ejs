@@ -18,7 +18,6 @@
               SKILLS MARKET
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 <%= totalSkillsInTheMarket %> 
-                <span class="visually-hidden">unread messages</span>
               </span>
             </a>
         </ul>
@@ -29,16 +28,20 @@
       </div>
     </div>
   </nav>
- <!-- setSkill Modal -->
- <%- include('./partials/skillModal.ejs') %> 
-
- <%if(mySkills.length > 0){ %>
-  <% 
+  
+  <%if(mySkills.length > 0){ %>
+    <% 
    let firstSkill = mySkills[0];
-  let studentEmail = firstSkill.student; 
-  %>
+   let studentEmail = firstSkill.student; 
+   %>
+
+
+<!-- setSkill Modal -->
+
+ <%- include('./partials/skillModal.ejs') %> 
+ <%- include('./partials/mailModal.ejs') %> 
 <div class="d-flex justify-content-center mt-5">
-  <a href="#" class="btn btn-outline-success rounded-pill ms-1 text-truncate" style="max-width: 100px;" type="submit"><%- studentEmail %></a>
+  <a href="#sendMail" data-bs-toggle="modal" class="btn btn-outline-success rounded-pill ms-1 " type="submit"><%- studentEmail %></a>
 </div>
 
 

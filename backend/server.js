@@ -58,6 +58,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
+    maxAge:60000,
     store: new MongoStore({ mongooseConnection:mongoose.connection})
   }))
 
@@ -104,10 +105,12 @@ app.use('/api/student',require('./routes/studentRoutes'))
 app.use('/api/goal',require('./routes/goalRoutes'))
 //Skill set Routing
 app.use('/api/skill',require('./routes/skillRoutes'))
+//Messages routing
+
+app.use('/messaging', require('./routes/messageRoutes.js'))
 //TESTING GOOGLE AUTH
 app.use('/auth',require('./routes/studentRoutes' ))
 
-app.get
 
 app.listen(PORT,()=>{
 

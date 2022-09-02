@@ -50,9 +50,11 @@ res.redirect('/mySkills')
 
 
 const findSkills =asyncHandler (async(req , res )=>{
+    let loggedInUser = req.user.email ;
+    
     const myTotalSkills = await Skill.countDocuments({student:req.user.email});
     const skillsInTheMarket = await Skill.find({status:'career-oriented'}).lean();
-    res.render('skillsMarket',{title:'SKILL-MARKET', skillsInTheMarket,myTotalSkills});
+    res.render('skillsMarket',{title:'SKILL-MARKET', skillsInTheMarket,myTotalSkills , loggedInUser , });
 })
 
 
@@ -63,6 +65,7 @@ const findSkills =asyncHandler (async(req , res )=>{
 
 const userSkills =asyncHandler ( async (req,res)=>{
 
+    let loggedInUser = req.user.email ;
     let mySkills = await Skill.find({student:req.params.email}).lean()
     const totalSkillsInTheMarket = await Skill.countDocuments();
 
@@ -72,8 +75,7 @@ const userSkills =asyncHandler ( async (req,res)=>{
         res.render('error/404',{title:'404'});
         return
     } else{
-            console.log(mySkills.length)
-            res.render('mySkills' , {title:req.params.email , mySkills , totalSkillsInTheMarket}  )
+            res.render('mySkills' , {title:req.params.email , mySkills , totalSkillsInTheMarket,loggedInUser }  )
         return
     }
     }
@@ -104,7 +106,7 @@ const deleteSkill =asyncHandler ( async (req,res)=>{
     }else{ 
 
     await Skill.remove({_id:req.params.id});
-    req.flash('success_msg', 'Skill Successfully Unshared..')
+    req.flash('success_msg', 'Skill Successfully Removed..')
     res.redirect('/mySkills')
     }
 
