@@ -2,54 +2,56 @@
 
       <div class="container">
 
-              <h4 class="container  border border-secondary rounded-pill"> STUDENT ACADEMIC  RADAR</h4>
+              <h4 class="container  d-flex justify-content-center "> Register</h4>
 
-              <div class=" home_icon">
-                <i class="fa-solid fa-anchor  fa-5x"></i>
-               </div>
-                        <%- include('./partials/messagePrompts.ejs') %> 
+              <div class="row d-flex justify-content-center">
+                <form  class="col-6 border border-muted shadow" action="/api/student" method="POST" > 
+                  <%- include('./partials/messagePrompts.ejs') %> 
+    <div class=" home_icon">
+      <i class="fa-solid fa-anchor  fa-5x"></i>
+     </div>  
+    <div class="form-group">
+    
+      <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" class="form-control " id="name" placeholder="your@name" value="<%- typeof name != 'undefined' ? name : '' %>" >
+    </div>
 
-              <form   action="/api/student" method="POST" > 
-              
-              
-              <div class="form-group">
-              
-                <label for="name" class="form-label">Name</label>
-                  <input type="text" name="name" class="form-control " id="name" placeholder="your@name" value="<%- typeof name != 'undefined' ? name : '' %>" >
-              </div>
-          
-              <div class="form-group">
-              
-                <label for="name" class="form-label">course</label>
-                  <input type="text" name="course" class="form-control " id="course" placeholder="Course Name" value="<%- typeof course != 'undefined' ? course : '' %>">
-              </div>
-              
-              
-              <div  class="form-group">
-              
-                <label for="email" class="form-label ">Email address</label>
-                <input type="email"  name="email" class="form-control " id="email" placeholder="name@example.com" value="<%- typeof email != 'undefined' ? email : '' %>">
-              </div>
-              
-              
-              
-              <div class="form-group">
-              
-                <label for="level" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control " id="password "placeholder="Password" value="<%- typeof password != 'undefined' ? password : '' %>" >
-              </div>
+    <div class="form-group">
+    
+      <label for="name" class="form-label">course</label>
+        <input type="text" name="course" class="form-control " id="course" placeholder="Course Name" value="<%- typeof course != 'undefined' ? course : '' %>">
+    </div>
+    
+    
+    <div  class="form-group">
+    
+      <label for="email" class="form-label ">Email address</label>
+      <input type="email"  name="email" class="form-control " id="email" placeholder="name@example.com" value="<%- typeof email != 'undefined' ? email : '' %>">
+    </div>
+    
+    
+    
+    <div class="form-group">
+    
+      <label for="level" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control " id="password" placeholder="Password" value="<%- typeof password != 'undefined' ? password : '' %>" >
+        <small id="emailHelp" class="form-text btn text-muted"><i onclick="showPassword();" class="fa-solid fa-eye"></i></small>
 
-              <div class="form-group">
-              
-                <label for="level" class="form-label">Confirm Password</label>
-                  <input type="password" name="password2" class="form-control " id="password2" placeholder=" confirm Password" value="<%- typeof password2 != 'undefined' ? password2 : '' %>" >
-              </div>
-              <div class=" d-flex ">
-              
-                <div class="flex-fill">
-                  <input  type="submit" class=" btn btn-outline-secondary w-20 " id="submit"   value="Register">
-                </div>
+    </div>
+
+    <div class="form-group">
+    
+      <label for="level" class="form-label">Confirm Password</label>
+        <input type="password" name="password2" class="form-control " id="password2" placeholder=" confirm Password" value="<%- typeof password2 != 'undefined' ? password2 : '' %>" >
+    </div>
+    <div class=" d-flex ">
+    
+      <div class="flex-fill">
+        <input  type="submit" class=" btn btn-outline-secondary w-20 " id="submit"   value="Register">
       </div>
-              </form>
-                   <p   class="lead mt-4  text-muted"> <small> Have An Account?</small>  <a class="form-label" href="/login"> <small>Login</small> </a></p></small>
-              
+</div>
+<p   class="lead mt-4  text-muted"> <small> Have An Account?</small>  <a class="form-label" href="/login"> <small>Login</small> </a></p></small>
+</form>
+
+</div>
+             

@@ -1,5 +1,0 @@
-[build]
-base = "backend/"
-publish = "backend/build/"
-command = "npm build"
-

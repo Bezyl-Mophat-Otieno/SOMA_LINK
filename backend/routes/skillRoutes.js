@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router(); 
 const {addSkill,findSkills , userSkills ,deleteSkill } = require('../controler/skillController');
-const {protect} = require('../middleware/authenticationMiddleware')
 const {ensureAuthenticated , forwardAuthenticated} = require ('../config/auth.js');
 
 

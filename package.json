@@ -6,6 +6,7 @@
   "scripts": {
     "start": " cross-env NODE_ENV=production node backend/server",
     "server": " cross-env NODE_ENV=development nodemon backend/server"
+    
   },
   "author": "MOPHAT",
   "license": "MIT",

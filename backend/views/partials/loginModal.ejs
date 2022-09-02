@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h4 class="container  border border-secondary rounded-pill"> STUDENT</h4>
+          <h4 class="container  border border-secondary rounded-pill d-flex justify-content-center"> STUDENT</h4>
 
           <div class="home_icon ">
 
@@ -30,9 +30,10 @@
                 
                 
                 <div class="form-group">
-                
-                  <label for="name" class="form-label">Password</label>
-                    <input type="password" oninput="spin()" name="password" class="form-control " id="password" placeholder="Enter Password">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control " id="password" placeholder="Password">
+                  <small id="emailHelp" class="form-text btn text-muted"><i onclick ="showPassword();" class="fa-solid fa-eye"></i></small>
+        
                 </div>
             
                     <div class=" d-flex ">
@@ -53,4 +54,3 @@
     </div>
   </div>
 </div>
-   
