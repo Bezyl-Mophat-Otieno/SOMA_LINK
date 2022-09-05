@@ -139,6 +139,9 @@ password
 
 });
 
+// @ Student Logout function
+//GET /api/student/logout
+//private 
 const studentLogout =  asyncHandler (async (req , res , next) =>{
 
 req.logout((err)=>{

@@ -8,7 +8,8 @@ const Message = require ('../Models/messageModel')
 
 const setGoal = asyncHandler( async (req,res)=>{
 const goals = await Goal.find({student:req.user.id}).lean()
-const myMessages = await Message.find({to:req.user.email}).lean()
+const totalMessages = await Message.countDocuments({to:req.user.email})
+
 
 let errors = [];
 const {text} = req.body;
@@ -16,7 +17,7 @@ const {text} = req.body;
     if(!text){
 res.status(400)
 errors.push({msg:'Kindly Enter Information In All Fields'});
-res.render('dashboard',{ title: 'DASHBOARD', errors,goals,myMessages})
+res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     } else{
 

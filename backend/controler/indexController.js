@@ -78,9 +78,10 @@ res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
     try {
       const goals = await Goal.find({student:req.user.id}).lean()
       const myTotalSkills = await Skill.countDocuments({student:req.user.email});
-      const myMessages = await  Message.find({to:req.user.email}).lean()
+      const totalMessages = await Message.countDocuments({to:req.user.email})
 
-      res.render('dashboard', {student:req.user, title:'DASHBOARD'  , goals, myTotalSkills,myMessages})
+
+      res.render('dashboard', {student:req.user, title:'DASHBOARD'  , goals, myTotalSkills,totalMessages})
   
     } catch (error) {
       console.error(error)
@@ -92,4 +93,4 @@ res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
 
 
   
-   module.exports = {mySkills , searching , dashboard , home , register,login} 
+   module.exports = {mySkills , searching , dashboard , home , register,login } 

@@ -42,11 +42,34 @@ res.redirect('/api/skill/skillsMarket')
 //private 
 
 const inbox = asyncHandler(async(req,res)=>{
+const loggedInUser = req.user.email ;
 const myMessages = await Message.find({to:req.user.email}).lean()
-res.render('inbox', {title:'INBOX',myMessages})
+const totalSkillsInTheMarket = await Skill.countDocuments();
+const myTotalSkills = await Skill.countDocuments({student:req.user.email});
+const totalMessages = await Message.countDocuments({to:req.user.email})
+
+
+res.render('inbox', {title:'INBOX',myMessages , loggedInUser,myTotalSkills,totalSkillsInTheMarket,totalMessages})
+
+
+})
+
+//delete Mail 
+//DELETE /messaging/delete/:id
+//private 
+
+const deleteMessage = asyncHandler(async(req,res)=>{
+
+
+    await Message.remove({_id:req.params.id});
+    req.flash('success_msg', 'Message Successfully deleted..')
+    res.redirect('/messaging/inbox')
+
+
 
 
 })
 
 
-module.exports = { sendMail,inbox }
+
+module.exports = { sendMail,inbox , deleteMessage }
