@@ -1,5 +1,8 @@
 
 <%- include('./partials/messagePrompts.ejs') %> 
+<%- include('./partials/mailModal') %> 
+<%- include('./partials/skillModal.ejs') %> 
+ 
   <!-- navbar -->
   <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,22 +16,22 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
         </li>
-        <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded-pill m-auto position-relative">
+        <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded m-auto position-relative">
           MY-SKILLS
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <%= myTotalSkills %> 
           </span>
         </a>
-        <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded-pill position-relative m-auto">
+        <li class="nav-item">
+          <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
+        </li>
+        <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded position-relative m-auto">
           SKILLS MARKET
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <%= totalSkillsInTheMarket %> 
           </span>
         </a>
 
-        <li class="nav-item">
-          <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
-        </li>
       </ul>
       <form class="d-flex" action="/search" method="POST">
         <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
@@ -38,52 +41,45 @@
 </nav>
 
 
- 
- 
- <div class="">
-   <div class="row row-cols-1 row-cols-md-2">
-   
-     <%if(myMessages.length > 0){ %>
-      <%myMessages.forEach((message)=>{ %>
-       
-   
-       <%- include('./partials/mailModal.ejs') %> 
-       <div class="col  gx-1">
-        <div>
-          <a href="#sendMail" data-bs-toggle="modal" class="card skill__card mb-5 mt-5 shadow rounded m-auto skill__link ">
-            <div class="card-body rounded">
-              <h5 class="card-title text-muted"> <b class="h5 font-weight-light text-monospace text-success">From:</b><%- message.from %>  </h5>
-              <hr class="dropdown-divider">
-              <p class="card-text"> <%- message.message %></p>
-              
-              
-              
-               <a  href="#sendMail" data-bs-toggle="modal" class="btn btn-outline-success rounded-pill m-auto"><i class="fas fa-edit"></i></a> 
-             
+<section class="inbox">
+  
+  <div class="row row-cols-1 row-cols-md-3">
+<% if(myMessages.length > 0) { %> 
+  <% myMessages.forEach((message)=> { %>
     
-               <form action="/messaging/delete/<%- message._id %> " method="POST" id="delete-form">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button type="submit" class="btn btn-outline-danger rounded-pill " >
-                      <i class="fas fa-trash"></i>
-                  </button>
-                </form>
-             </div>
-           </a>
-
+    
+    <div class="col">
+      <div class="card mb-5 mt-5 shadow rounded m-auto ">
+        <div class="card-body">
+          <h5 class="card-title i "> <b class="h5 font-weight-light text-monospace text-success"> From : </b> <%- message.from %>  </h5>
+          <hr class="dropdown-divider">
+          <p class="card-text"> <%- message.message %></p>
+          
+          <div class="d-flex justify-content-end mt-1">
+            <div>
+              <a  data-bs-toggle="modal" href="#sendMail" class="btn btn-outline-success rounded-pill m-auto">Reply<i class="fas fa-edit"></i></a>
+            </div>
+             <div>
+               <form action="http://localhost:8000/messaging/delete/<%- message._id %>" method="POST" id="delete-form">
+                 <input type="hidden" name="_method" value="DELETE">
+                 <button type="submit" class="btn btn-outline-danger rounded-pill " >
+                     <i class="fas fa-trash"></i>
+                 </button>
+               </form>
+            </div>
+          </div>
+        
         </div>
       </div>
-      
-   
-   <%});%>
-   <% }else {%>
-   
-     <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No Messages...</h1>
-     
-   
-     <% } %>
-   </div>
+    </div>
+        <% }); %>
+  <% } else{ %>
 
-
- </div>
+    <div class="alert alert-warning alert-dismissible text-dark  fade show" role="alert">No messages....  
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  
+    <% } %> 
+</section>
 
 

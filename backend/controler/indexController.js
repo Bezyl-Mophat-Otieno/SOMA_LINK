@@ -24,11 +24,12 @@ const nodemailer = require('nodemailer')
 const mySkills = asyncHandler( async (req,res) =>{
 
     let loggedInUser = req.user.email ;
+    const totalMessages = await Message.countDocuments({to:req.user.email})
   let mySkills = await Skill.find({student : req.user.email});
   
 
     const totalSkillsInTheMarket = await Skill.countDocuments();
-    res.render('mySkills', { title:'MY-SKILLS',totalSkillsInTheMarket , mySkills , loggedInUser});
+    res.render('mySkills', { title:'MY-SKILLS',totalSkillsInTheMarket , mySkills , loggedInUser, totalMessages});
 
 })
 

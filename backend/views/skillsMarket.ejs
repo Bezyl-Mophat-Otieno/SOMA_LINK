@@ -12,7 +12,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
           </li>
-          <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded-pill m-auto position-relative">
+          <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded m-auto position-relative">
             MY-SKILLS
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               <%= myTotalSkills %> 
@@ -21,9 +21,11 @@
           <li class="nav-item">
             <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
           </li>
-          <a  href="http://localhost:8000/messaging/inbox"  class="btn  border border-secondary  position-relative m-auto">
-            <i class="fa-solid fa-envelope-open-text fa-1x"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"></span> </a> 
+          <li class="nav-item">
+            <a  href="http://localhost:8000/messaging/inbox"  class="btn  border border-secondary  position-relative m-auto">
+              <i class="fa-solid fa-envelope-open-text fa-1x">Inbox</i>
+                <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"> <%- totalMessages %> </span> </a> 
+          </li>
 
         </ul>
         <form class="d-flex" action="/search" method="POST">
@@ -37,9 +39,9 @@
 
 <!-- setSkill Modal -->
  <%- include('./partials/skillModal.ejs') %> 
-<div class="row row-cols-1 row-cols-md-3">
-  
-  <%if(skillsInTheMarket.length > 0){ %>
+ 
+ <%if(skillsInTheMarket.length > 0){ %>
+  <div class="row row-cols-1 row-cols-md-3">
    <%skillsInTheMarket.forEach((skill)=>{ %>
     
     <div class="col  gx-1">
@@ -60,8 +62,8 @@
 <%});%>
 <% }else {%>
 
-  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Career-Oriented Skills Are Yet To Be Added By Other Users </h1>
   
-
+  
+  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Career-Oriented Skills Are Yet To Be Added By Other Users </h1>
   <% } %>
 </div>

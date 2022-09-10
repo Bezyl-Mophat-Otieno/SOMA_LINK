@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Skill = require('../Models/skillSetModel')
+const Message = require ('../Models/messageModel')
+
 //@Add a skill
 //route POST api/skill 
 //@public
@@ -12,12 +14,13 @@ let errors = []
 req.body.user = req.user;
 const { text , status} = req.body;
 const goals = await Goal.find({student:req.user.id}).lean()
+const totalMessages = await Message.countDocuments({to:req.user.email})
 req.body.user = req.user.id ; 
 
     if(!text || !status){
 res.status(400)
 errors.push({msg:'Kindly Enter Information In All Fields'});
-res.render('dashboard',{errors,goals})
+res.render('dashboard',{errors,goals,totalMessages})
 
     }else{
 
@@ -51,10 +54,10 @@ res.redirect('/mySkills')
 
 const findSkills =asyncHandler (async(req , res )=>{
     let loggedInUser = req.user.email ;
-    
+    const totalMessages = await Message.countDocuments({to:req.user.email})
     const myTotalSkills = await Skill.countDocuments({student:req.user.email});
     const skillsInTheMarket = await Skill.find({status:'career-oriented'}).lean();
-    res.render('skillsMarket',{title:'SKILL-MARKET', skillsInTheMarket,myTotalSkills , loggedInUser , });
+    res.render('skillsMarket',{title:'SKILL-MARKET', skillsInTheMarket,myTotalSkills , loggedInUser ,totalMessages });
 })
 
 
@@ -68,6 +71,7 @@ const userSkills =asyncHandler ( async (req,res)=>{
     let loggedInUser = req.user.email ;
     let mySkills = await Skill.find({student:req.params.email}).lean()
     const totalSkillsInTheMarket = await Skill.countDocuments();
+    const totalMessages = await Message.countDocuments({to:req.user.email})
 
 
     if(!mySkills){
@@ -75,7 +79,7 @@ const userSkills =asyncHandler ( async (req,res)=>{
         res.render('error/404',{title:'404'});
         return
     } else{
-            res.render('mySkills' , {title:req.params.email , mySkills , totalSkillsInTheMarket,loggedInUser }  )
+            res.render('mySkills' , {title:req.params.email , mySkills , totalSkillsInTheMarket,loggedInUser,totalMessages}  )
         return
     }
     }

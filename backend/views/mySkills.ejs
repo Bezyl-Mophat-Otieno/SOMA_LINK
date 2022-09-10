@@ -11,19 +11,21 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
           </li>
+          <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded position-relative m-auto">
+            SKILLS MARKET
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded bg-danger">
+              <%= totalSkillsInTheMarket %> 
+            </span>
+          </a>
           <li class="nav-item">
             <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
           </li>
-            <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded-pill position-relative m-auto">
-              SKILLS MARKET
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                <%= totalSkillsInTheMarket %> 
-              </span>
-            </a>
-            <a  href="http://localhost:8000/messaging/inbox"  class="btn  border border-secondary  position-relative m-auto">
-              <i class="fa-solid fa-envelope-open-text fa-1x"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"></span> </a> 
-
+            
+            <li >
+              <a  href="http://localhost:8000/messaging/inbox"  class="btn  border border-secondary  position-relative m-auto">
+                <i class="fa-solid fa-envelope-open-text fa-1x">Inbox</i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"> <%- totalMessages %> </span> </a> 
+            </li>
         </ul>
         <form class="d-flex" action="http://localhost:8000/search" method="POST">
           <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
@@ -33,17 +35,15 @@
     </div>
   </nav>
   
+   <%- include('./partials/skillModal.ejs') %> 
+   <%- include('./partials/mailModal.ejs') %> 
+  
   <%if(mySkills.length > 0){ %>
     <% 
    let firstSkill = mySkills[0];
    let studentEmail = firstSkill.student; 
    %>
 
-
-<!-- setSkill Modal -->
-
- <%- include('./partials/skillModal.ejs') %> 
- <%- include('./partials/mailModal.ejs') %> 
 <div class="d-flex justify-content-center mt-5">
   <a href="#sendMail" data-bs-toggle="modal" class="btn btn-outline-success rounded-pill ms-1 " type="submit"><%- studentEmail %></a>
 </div>
@@ -53,9 +53,9 @@
 <% } %>
 
 
-<div class="row row-cols-1 row-cols-md-3">
-  
-  <%if(mySkills.length > 0){ %>
+
+<%if(mySkills.length > 0){ %>
+  <div class="row row-cols-1 row-cols-md-3">
    <%mySkills.forEach((skill)=>{ %>
 
 
@@ -85,9 +85,7 @@
 
 <%});%>
 <% }else {%>
-
-  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No skills Added</h1>
   
-
+  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No skills Added</h1>
   <% } %>
 </div>
