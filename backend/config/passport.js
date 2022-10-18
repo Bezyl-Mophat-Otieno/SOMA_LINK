@@ -1,6 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 // Load User model

@@ -57,6 +57,7 @@ console.log( changedDoc)
   
   // res.render('search', {title:'SKILL-SEARCHED' , skillSearched});
 res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
+
   if(!skillSearched){
 
 

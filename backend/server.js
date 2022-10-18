@@ -33,7 +33,7 @@ require('./config/passport')(passport)
 const connectDB = require('./config/db');
 
 
-
+//Starting the database .
 connectDB();
 //adding a body parser middleware 
 app.use(express.json());
