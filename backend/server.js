@@ -29,6 +29,12 @@ const {ensureAuthenticated , forwardAuthenticated} = require ('./config/auth');
 // Passport Config
 require('./config/passport')(passport)
 
+//Mongo DB config
+const connectDB = require('./config/db');
+
+
+
+connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 

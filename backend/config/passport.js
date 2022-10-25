@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const asyncHandler = require('express-async-handler')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 // Load models

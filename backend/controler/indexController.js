@@ -46,6 +46,34 @@ const mySkills = asyncHandler( async (req,res) =>{
 //private route
 const searching = asyncHandler( async(req,res) =>{
 
+  let skillsInTheMarket = await Skill.find({status:'career-oriented'}).lean();
+  let firstSkill = skillsInTheMarket[0].skill ;
+  let cleanedUp = (firstSkill).replace(/[<|>|p|\/]/g,'')
+  let firstObject = skillsInTheMarket[0];
+  let update = {$set:{ student:firstObject.student, skill:cleanedUp , status:firstObject.status }}
+  let options = {} ;
+
+let changedDoc =Skill.updateOne(firstObject, update , options) 
+
+console.log( changedDoc)
+
+
+
+      let searchTerm = (req.body.search);
+      let skillSearched =  await Skill.find({ $text: {$search:searchTerm , $diacriticSensitive : true}   })  ;
+  
+  // res.render('search', {title:'SKILL-SEARCHED' , skillSearched});
+res.render('search',{ title:'SEARCH-RESULTS', skillSearched})
+  if(!skillSearched){
+
+
+    console.error('Something Went wrong! , Unable To SEARCH ')
+      res.render('error/404',{title:'404'})
+    
+  }
+  
+    
+    
     
   
   })
