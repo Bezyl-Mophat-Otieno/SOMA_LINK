@@ -29,12 +29,6 @@ const {ensureAuthenticated , forwardAuthenticated} = require ('./config/auth');
 // Passport Config
 require('./config/passport')(passport)
 
-//Mongo DB config
-const connectDB = require('./config/db');
-
-
-
-connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 
@@ -101,6 +95,8 @@ app.set('layout','./layouts/main' );
 //Student Routing
 app.use('/',require('./routes/indexRoutes'))
 app.use('/api/student',require('./routes/studentRoutes'))
+//Tutor Routing
+app.use('/api/tutor',require('./routes/tutorRoutes'))
 //Goals Routing
 app.use('/api/goal',require('./routes/goalRoutes'))
 //Skill set Routing
@@ -112,7 +108,23 @@ app.use('/messaging', require('./routes/messageRoutes.js'))
 app.use('/auth',require('./routes/studentRoutes' ))
 
 
-app.listen(PORT,()=>{
+//Asynchronous database connection
+const asyncDatabaseConnection =async ()=>{
+
+try {
+
+//Mongo DB config
+const connectDB = require('./config/db');
+//Starting the database .
+  await connectDB();
+  app.listen(PORT,()=>{
 
     console.log(`server started in ${process.env.NODE_ENV} mode on port ${PORT} `);
 })
+} catch (error) {
+  console.log(error);
+  
+}
+};
+
+asyncDatabaseConnection();

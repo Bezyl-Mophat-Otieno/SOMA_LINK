@@ -1,6 +1,6 @@
 
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- Modal For  A Student -->
+  <div class="modal fade" id="loginStudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -44,7 +44,67 @@
                 
                 </div>
                 </form>    
-                <p   class="lead mt-4  text-muted"> <small> Do Not Have An Account?</small>  <a class="form-label" href="/register"> <small>Register</small> </a></p></small>
+                <p   class="lead mt-4  text-muted"> <small> Do Not Have An Account?</small>  <a class="form-label" href="/"> <small>Register</small> </a></p></small>
+  
+                </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+
+
+
+
+
+  <!-- Modal For  A Tutor -->
+  <div class="modal fade" id="loginTutor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 class="container  border border-secondary rounded-pill d-flex justify-content-center"> TUTOR</h4>
+
+          <div class="home_icon ">
+
+            <i class=" fa-brands fa-node-js fa-5x"></i>
+          </div>
+
+
+            <div class="container">
+
+                
+                <form   action="/api/tutor/login" method="POST" > 
+                
+                
+                
+                <div  class="form-group">
+                
+                  <label for="email" class="form-label ">Email address</label>
+                  <input type="email"  name="email" class="form-control " id="email" placeholder="name@example.com">
+                </div>
+                
+                
+                <div class="form-group">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control " id="password" placeholder="Password">
+                  <small id="emailHelp" class="form-text btn text-muted"><i onclick ="showPassword();" class="fa-solid fa-eye"></i></small>
+        
+                </div>
+            
+                    <div class=" d-flex ">
+                  <div class="flex-fill">
+                    <input  type="submit" class=" btn btn-outline-secondary w-20 " id="submit"   value="LOG-IN">
+                  </div>
+                
+                
+                </div>
+                </form>    
+                <p   class="lead mt-4  text-muted"> <small> Do Not Have An Account?</small>  <a class="form-label" href="/"> <small>Register</small> </a></p></small>
   
                 </div>
         <div class="modal-footer">
@@ -54,3 +114,4 @@
     </div>
   </div>
 </div>
+

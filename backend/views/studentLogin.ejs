@@ -1,0 +1,44 @@
+
+
+      <div class="container">
+
+
+        <h4 class="container d-flex justify-content-center "> Login</h4>
+        <div class="row d-flex justify-content-center  ">
+          
+          <form   class=" col-6 border border-muted shadow" action="/api/student/login" method="POST" > 
+                 
+                                    <div class=" home_icon">
+                   
+                                     <i class=" home_icon fa-solid fa-id-card fa-5x "></i>
+                 
+                                    </div>
+                      <%- include('./partials/messagePrompts.ejs') %> 
+        
+                      <div  class="form-group ">
+                      
+                        <label for="email" class="form-label ">Email address</label>
+                        <input type="email" name="email" class="form-control " id="email" placeholder="name@example.com" value="<%- typeof email != 'undefined' ? email : '' %>">
+                      </div>
+                      
+                      
+                      
+                      <div class="form-group">
+                      
+                        <label for="level" class="form-label">Password</label>
+                          <input type="password"    name="password" class="form-control " id="password" placeholder="Password" value="<%- typeof password != 'undefined' ? password : '' %>" >
+                          <small id="emailHelp" class="form-text btn text-muted"><i onclick="showPassword();" class="fa-solid fa-eye"></i></small>
+                      </div>
+                         <br>
+                      <div class=" d-flex ">  
+                        <div class="flex-fill">
+                          <input  type="submit"  class=" btn btn-outline-secondary w-20 " id="submit"   value="Login">
+                        </div>
+                        </div>
+                        <p   class="lead mt-4  text-muted"> <small> Do Not Have An Account?</small>  <a class="form-label" href="/"> <small>Register</small> </a></p></small>
+                      </form>
+        
+
+                  </div>
+
+

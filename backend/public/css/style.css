@@ -1,23 +1,13 @@
 
-
+/* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Edu+VIC+WA+NT+Beginner:wght@700&family=Marck+Script&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Marck+Script&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Righteous&family=Shadows+Into+Light&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Source+Code+Pro&family=Teko:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Source+Code+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&display=swap');
-/* 
-font-family: 'Edu VIC WA NT Beginner', cursive;
 
-font-family: 'Source Code Pro', monospace;
 
-<i class="fa-solid fa-arrow-right-to-arc"></i>
-<i class="fa-light fa-id-card"></i>
-<i class="fa-light fa-arrow-right-to-bracket"></i> */
-
-form{
-  font-family: 'Edu VIC WA NT Beginner', cursive;
-}
 
 a{
   text-decoration: none;

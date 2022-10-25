@@ -110,7 +110,7 @@ const deleteSkill =asyncHandler ( async (req,res)=>{
     }else{ 
 
     await Skill.remove({_id:req.params.id});
-    req.flash('success_msg', 'Skill Successfully Removed..')
+    req.flash('success_msg', 'Skill Successfully Deletd..')
     res.redirect('/mySkills')
     }
 

@@ -2,7 +2,7 @@ const mongoose = require ('mongoose')
  const skillSchema = mongoose.Schema({
     student:{
         type:String,
-        required:[true,'a student must be associated with a goal'],
+        required:[true,'a student must be associated with a skill'],
         ref:'Student'
     },
 skill:{

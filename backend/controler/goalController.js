@@ -16,7 +16,7 @@ const {text} = req.body;
 
     if(!text){
 res.status(400)
-errors.push({msg:'Kindly Enter Information In All Fields'});
+errors.push({msg:'Kindly Fill in the text Field'});
 res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     } else{
@@ -31,7 +31,6 @@ res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
     }) 
 
     if(goal){
-        console.log(goal.student)
 
         res.redirect('/dashboard')
     }
@@ -58,20 +57,10 @@ const updateGoalForm =asyncHandler ( async (req,res)=>{
     if(goal.student!= req.user.id){
         res.status(401)
         res.render('error/500',{title:'500'});
-        console.log(goal)
-
-        console.log(req.user._id)
         return
     } else{
-console.log(goal.student);
-console.log(req.user.id)
-console.log(req.params.id)
-
     res.render('updateGoal' , {title:'UPDATE' , goal})
-    
-
     return
-
     }
     }
     
