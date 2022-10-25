@@ -34,7 +34,6 @@ const connectDB = require('./config/db');
 
 
 
-connectDB();
 //adding a body parser middleware 
 app.use(express.json());
 
