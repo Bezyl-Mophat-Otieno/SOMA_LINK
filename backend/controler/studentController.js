@@ -151,7 +151,7 @@ req.logout((err)=>{
   }
 
 req.flash('success_msg', 'You Are Successfully Logged Out');
-res.redirect('/studentLogin');
+res.redirect('/');
 });
 
 }) 

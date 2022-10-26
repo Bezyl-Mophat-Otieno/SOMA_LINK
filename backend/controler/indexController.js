@@ -9,19 +9,35 @@ const nodemailer = require('nodemailer')
 //GET /
 //public route
  const home = asyncHandler(async (req,res) =>{res.render('home' ,{title:'HOME' })})
+
+
+
+
 // rendering the register page
-// GET /register
+// GET /studentRegister
 //public routes
- const register = asyncHandler(async (req,res) =>{res.render('register',{title:'REGISTER' })})
+ const studentRegister = asyncHandler(async (req,res) =>{res.render('studentRegister',{title:'REGISTER' })})
+
+
+
+ // rendering the tutorRegister page
+// GET /tutorRegister
+//public routes
+const tutorRegister = asyncHandler(async (req,res) =>{res.render('tutorRegister',{title:'REGISTER' })})
+
+
+
+
+
 //rendering the login page
-//GET /login
+//GET /studentLogin
 //public routes 
   const studentLogin= asyncHandler(async(req,res) =>{res.render('studentLogin',{title:'STUDENT_LOGIN' })} )
 
 
 
   //rendering the  tutor login page
-//GET /login
+//GET /tutorLogin
 //public routes 
 const tutorLogin= asyncHandler(async(req,res) =>{res.render('tutorLogin',{title:'TUTOR_LOGIN' })} )
 
@@ -114,4 +130,4 @@ const tutorDashboard =asyncHandler( async (req,res) => {
 
  
   
-   module.exports = {mySkills , searching , studentDashboard  , tutorDashboard , home , register,studentLogin , tutorLogin } 
+   module.exports = {mySkills , searching , studentDashboard  , tutorDashboard , home , studentRegister,tutorRegister,studentLogin , tutorLogin } 
