@@ -155,38 +155,38 @@ if(tutor){
 const tutorLogin= asyncHandler(async (req , res , next)=>{
   
   const {email , password} = req.body;
-let errors =[];
+  let errors =[];
 
 
-//If any Error Occurs re-render login page displaying the data keyed in. 
+  //If any Error Occurs re-render login page displaying the data keyed in. 
+  
+  if( !email ||!password){
+    res.status(400)
+    errors.push({msg:'kindly fill in all fields'});
+                  
+    }
 
-if( !email ||!password){
-  res.status(400)
-  errors.push({msg:'kindly fill in all fields'});
-                
-            }
+  // re-render login page displaying the data keyed in.
+  if (errors.length > 0) {
+  res.render('tutorLogin',  {
+    title:'LOGIN',
+    errors,
+    email,
+    password
 
-// re-render login page displaying the data keyed in.
-if (errors.length > 0) {
-res.render('login',  {
-  title:'LOGIN',
-errors,
-email,
-password
+  });
 
-});
+  }else{    
+      // Login Handling
+      passport.authenticate('local', {
+        successRedirect: '/tutorDashboard',
+        failureRedirect: '/tutorLogin',
+        failureFlash: true
+      })(req, res, next);
+      return
+  }
 
-}else{    
-    // Login Handling
-    passport.authenticate('local', {
-      successRedirect: '/tutorDashboard',
-      failureRedirect: '/tutorLogin',
-      failureFlash: true
-    })(req, res, next);
-    return
-}
-
-});
+  });
 
 //@ tutor upload files 
 // POST /api/tutor/uploadFiles
