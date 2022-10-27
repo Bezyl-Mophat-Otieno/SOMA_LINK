@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+    <!-- <img src="/images/rovenlogos_techglass_light.png" width="220" height="65" alt="WEB APP lOGO"> -->
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/studentDashboard">HOME</a>
+          </li>
+        </ul>
+        <form class="d-flex" action="http://localhost:8000/search" method="POST">
+          <input class="form-control me-2" type="search"  name="search" placeholder="search" aria-label="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+
+          <a href="" class="btn btn-success btn-block ms-1 "  type="submit"><%- tutor.name%>  </a>
+
+        </form>
+
+      </div>
+    </div>
+  </nav>

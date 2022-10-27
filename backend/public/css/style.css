@@ -7,7 +7,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&family=Source+Code+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@700&display=swap');
 
-
+.container{
+  max-width: 1500px;
+}
 
 a{
   text-decoration: none;
@@ -99,8 +101,6 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
 .skill__card:hover{
   color: black;
 }
-
-
 
 
 
