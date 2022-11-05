@@ -12,6 +12,7 @@ const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const { MulterError } = require('multer');
 
 
 
@@ -26,12 +27,11 @@ const conn = mongoose.createConnection(mongoURI);
 // Init gfs
 let gfs;
 
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-
+conn.once('open', ()=>{
+  gfs = new mongoose.mongo.GridFSBucket(conn.db),{
+    bucketName:'uploads'
+  }
+})
 // Create storage engine
 const storage = new GridFsStorage({
   url: mongoURI,
@@ -51,7 +51,64 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+//Multer Handling the storage 
+const store = multer(
+  { storage , 
+  limits:{fileSize : 200000},
+  fileFilter:(req , file , cb) => {
+    checkFileType(file , cb)
+
+  }
+  }
+    
+  );
+
+ const  checkFileType = (file,cb)=>{
+    const fileTypes = /jpg|png|jpeg/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
+    const mimeType= fileTypes.test(file.mimeType)
+    if(mimeType && extname)  
+    cb(null , true);;
+    cb('fileType');
+  }
+
+  // Multer Upload Middleware 
+
+  const uploadMiddleware = (req , res , next )=>{
+const upload = store.single('file')
+upload (req , res , (err)=>{
+  if(err instanceof multer,MulterError){
+
+    return res.status(400).send('File too Large')
+  } else if(err){
+    if(err === 'fileType'){
+      return res.status(400).send ('Images file only ')
+    }
+  }
+
+  next()
+
+})
+
+
+  }
+
+  const uploadController = asyncHandler(async (req , res )=>{
+  
+   const tutor = Tutor.create ({
+
+    name:"req.body.name",
+course:"req.body.course",
+email:"req.body.email",
+password:"hashedPassword",
+role:"req.body.role",
+file:req.file.file
+
+
+   })
+console.log(req.file)
+
+  })
 
 
 
@@ -188,16 +245,6 @@ const tutorLogin= asyncHandler(async (req , res , next)=>{
 
   });
 
-//@ tutor upload files 
-// POST /api/tutor/uploadFiles
-//private 
-
-
-const uploadFiles = asyncHandler(upload.single('file'),async(req,res)=>{
-  res.redirect('/tutorDashboard');
-})
-
-
 //@ get Files 
 //GET /api/tutor/getFiles
 //private 
@@ -254,6 +301,6 @@ res.redirect('/');
 registerTutor,
 tutorLogin,
 tutorLogout,
-getFiles,
-uploadFiles
+uploadMiddleware,
+uploadController
     };

@@ -22,15 +22,12 @@ password:{
     required:[true,"please enter your password"]
 },
 role:{
-    type:String,
-    required:[true,"please enter your role"]
-
-}
-
-
+ 
 
 },
-{
+
+},
+
     timestamps:true
 }
 )

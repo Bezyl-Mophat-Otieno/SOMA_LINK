@@ -20,7 +20,7 @@ req.body.user = req.user.id ;
     if(!text || !status){
 res.status(400)
 errors.push({msg:'Kindly Enter Information In All Fields'});
-res.render('dashboard',{errors,goals,totalMessages})
+res.render('Student_Dashboard',{errors,goals,totalMessages})
 
     }else{
 

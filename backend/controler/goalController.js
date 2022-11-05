@@ -32,7 +32,7 @@ res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     if(goal){
 
-        res.redirect('/dashboard')
+        res.redirect('/studentDashboard')
     }
 
 }
@@ -96,7 +96,7 @@ const updateGoal =asyncHandler ( async (req,res)=>{
         return
     } else{
            goal = await Goal.findOneAndUpdate({_id:req.params.id} , req.body , {new:true ,validators:true} );
-    res.redirect('/dashboard')
+    res.redirect('/studentDashboard')
     return
 
     }
@@ -134,7 +134,7 @@ const deleteGoal =asyncHandler ( async (req,res)=>{
         res.render('error/404');
     }else{
     await Goal.remove({_id:req.params.id});
-    res.redirect('/dashboard')
+    res.redirect('/studentDashboard')
     }
 
 
