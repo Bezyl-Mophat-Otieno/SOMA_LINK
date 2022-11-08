@@ -4,7 +4,18 @@ const router = express.Router()
 const {ensureAuthenticated , forwardAuthenticated} = require ('../config/auth');
 const Goal = require ('../Models/goalModel')
 const Skill = require ('../Models/skillSetModel')
-const {mySkills , searching , studentDashboard,tutorDashboard, home ,studentRegister,tutorRegister , studentLogin ,tutorLogin  , sendMail } = require ('../controler/indexController')
+const {
+    mySkills , 
+    searching , 
+    studentDashboard,
+    tutorDashboard, 
+    home ,
+    studentRegister,
+    tutorRegister , 
+    studentLogin ,
+    tutorLogin  , 
+    sendMail 
+} = require ('../controler/indexController')
 
 
 

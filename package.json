@@ -1,13 +1,13 @@
 {
-  "name": "student_academic_radar",
+  "name": "Soma Link",
   "version": "1.0.0",
-  "description": "ACADEMIC TRACKER",
+  "description": "A Web Application System That Enables Free Access To Digital Learning Resources By Needy Students  Using USSD As a Micro Service For Offline Access ",
   "main": "backend/server.js",
   "scripts": {
     "start": " cross-env NODE_ENV=production node backend/server",
-    "server": " cross-env NODE_ENV=development nodemon backend/server"
+    "server": " cross-env NODE_ENV=development nodemon backend/server.js"
   },
-  "author": "MOPHAT",
+  "author": "Mophat & Mugo",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -16,6 +16,7 @@
     "colors": "^1.4.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
@@ -35,7 +36,9 @@
     "nodemailer": "^6.7.8",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "striptags": "^3.2.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

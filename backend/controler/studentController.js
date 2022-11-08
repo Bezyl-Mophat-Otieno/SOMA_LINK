@@ -2,7 +2,8 @@ const Student=require('../Models/studentModel')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const jwt = require ('jsonwebtoken')
-const passport = require ('passport')
+const passport = require ('passport');
+const Yup = require('yup')
 
 
 //@desc register a student 
@@ -11,18 +12,33 @@ const passport = require ('passport')
 const registerStudent= asyncHandler(async (req,res)=>{
     
 //Making sure all the details of the student are captured 
-            const { name , course, email, password ,password2 } = req.body;
+            const { name , course, email,tel, password ,password2 } = req.body;
 let errors = [];
 //Ensuring all fields are filled
-            if(!name || !email || !course || !password || !password2){
+            if(!name || !email || !course || !tel || !password || !password2){
   res.status(400)
   errors.push({msg:'kindly fill in all fields'});
                 
-            }else{
-            //Ensuring the Password is at least 6 characters
-            if (password.length < 6) {
+            }
+            
+            
+            else{
+              // Phone number validation using regex pattern
+              
+              const phoneRegExp = /\+[1-9]{3}[0-9]{9}/g
+              // schema validation using yup to validate the phone number if matches with regex pattern
+              let phoneSchemaValidator =  Yup.string().matches(phoneRegExp)
+              let isValid = phoneSchemaValidator.isValidSync(tel) // returns true if valid
+              // Check if the phone number is valid
+              if(!isValid){
+                errors.push({msg: 'Enter a valid Phone Number'})
+              }
+              
+              //Ensuring the Password is at least 6 characters
+              if(password.length < 6) {
                 errors.push({ msg: 'Password must be at least 6 characters' });
-              } else{
+              } 
+              else{
                 if (password !== password2) {
                   errors.push({ msg: 'Passwords do not match' });
                 }
@@ -30,6 +46,7 @@ let errors = [];
               }
 
             }
+            
 //If any Error Occurs re-render register page displaying the data keyed in. 
 
 
@@ -40,6 +57,7 @@ if (errors.length > 0) {
       name,
       email,
       course,
+      tel,
       password,
       password2
       
@@ -58,6 +76,7 @@ res.render('studentRegister',  {
     name,
     email,
     course,
+    tel,
     password,
     password2
     
@@ -73,6 +92,7 @@ const hashedPassword = await bcrypt.hash(password,salt);
 name:req.body.name,
 course:req.body.course,
 email:req.body.email,
+tel:req.body.tel,
 password:hashedPassword,
 role:req.body.role,
 
