@@ -48,7 +48,7 @@
       <a href="http://localhost:8000/api/skill/mySkills/<%-skill.student  %> " class="card skill__card mb-5 mt-5 shadow rounded m-auto skill__link ">
         <div class="card-body ">
           <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> ADDED-ON : </b>   <%- skill.createdAt %>  </h5>
-          <h5 class="card-title2">  <%- skill.status %>  </h5>
+          <h5 class="card-title2"> <%- skill.status %>  </h5>
           <p class="card-text"> <%- skill.skill %></p>
           <a data-bs-toggle="modal" href="#sendMail" class="btn btn-success rounded-pill " ><%-skill.student  %> </a>
           <%- include('./partials/mailModal.ejs') %> 

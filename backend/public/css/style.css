@@ -101,7 +101,13 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
 .skill__card:hover{
   color: black;
 }
-
+.no-courses{
+  color:white;
+  text-decoration: none;
+}
+.no-courses:hover{
+  color:white;
+}
 
 
 

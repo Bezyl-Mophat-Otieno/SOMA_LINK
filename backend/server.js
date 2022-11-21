@@ -104,6 +104,8 @@ app.use('/api/student',require('./routes/studentRoutes'))
 app.use('/api/tutor',require('./routes/tutorRoutes'))
 //Goals Routing
 app.use('/api/goal',require('./routes/goalRoutes'))
+//Course Routing
+app.use('/api/courses',require('./routes/coursesRoutes'))
 //Skill set Routing
 app.use('/api/skill',require('./routes/skillRoutes'))
 //Messages routing

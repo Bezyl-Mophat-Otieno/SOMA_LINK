@@ -9,10 +9,15 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
           </li>
-
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/tutor/logout">Log-out</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/tutorDashboard">HOME</a>
           </li>
+          <a aria-current="page" href="http://localhost:8000/api/tutor/myCourses" class="btn btn-outline-secondary rounded m-auto position-relative">
+            MY COURSES
+          </a>
         </ul>
         <form class="d-flex" action="http://localhost:8000/search" method="POST">
           <input class="form-control me-2" type="search"  name="search" placeholder="search" aria-label="Search">

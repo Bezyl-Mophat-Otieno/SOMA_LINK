@@ -5,16 +5,16 @@ const mongoose = require ('mongoose')
         required:[true,'messages must come from a particular logged in student '],
         ref:'Student'
     },
-to:{
-type:String,
-},
-message: {
-    type: String,
-    required:[true,'message destination should be provided']
+    to:{
+    type:String,
+    },
+    message: {
+        type: String,
+        required:[true,'message destination should be provided']
 
-  },
+    },
 
- }, 
+    }, 
  
  {
 
