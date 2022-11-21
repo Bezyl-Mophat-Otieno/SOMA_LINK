@@ -13,8 +13,8 @@ const passport = require('passport')
 const Goal = require ('./Models/goalModel')
 const Skill = require ('./Models/skillSetModel')
 const expressLayouts = require('express-ejs-layouts');
+const cors = require('cors')
 
- 
 //Using morgan (' whenever a request  is made on  any route the route path is consoled on the terminal')
 
 if(process.env.NODE_ENV === 'development'){

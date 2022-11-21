@@ -1,8 +1,12 @@
 const asyncHandler = require ('express-async-handler')
 const Message = require ('../Models/messageModel')
 const Skill = require ('../Models/skillSetModel')
+<<<<<<< HEAD
 const striptags = require('striptags');
 
+=======
+const striptags = require("striptags");
+>>>>>>> 62ec00bba7ea15a20a3678c30bb22f79d20ad557
 
 // @ send a short message to the person possessing a skill you are interested in
 // POST /messaging
@@ -19,11 +23,15 @@ if(!to||!message){
 
 }else{
     const { from } = req.body
-
+let cleanedUpMessage = striptags(req.body.message).replace(/[\r\n]/gm, '')
 let message = await Message.create({
 from:req.user.email,
 to:req.body.to,
+<<<<<<< HEAD
 message: striptags (req.body.message)
+=======
+message:cleanedUpMessage,
+>>>>>>> 62ec00bba7ea15a20a3678c30bb22f79d20ad557
 })
 
 if(message) {

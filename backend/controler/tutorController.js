@@ -12,6 +12,7 @@ const Grid = require('gridfs-stream');
 const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
+const Yup = require('yup')
 const expressLayouts = require('express-ejs-layouts');
 const { MulterError } = require('multer');
 const striptags = require('striptags');
@@ -161,14 +162,25 @@ if(!files || files.length==0){
 const registerTutor= asyncHandler(async (req,res)=>{
     
 //Making sure all the details of the student are captured 
-            const { name , course, email, password ,password2 } = req.body;
+            const { name , course,tel, email, password ,password2 } = req.body;
 let errors = [];
 //Ensuring all fields are filled
-            if(!name || !email || !course || !password || !password2){
+            if(!name || !email || !course || !tel || !password || !password2){
   res.status(400)
   errors.push({msg:'kindly fill in all fields'});
                 
             }else{
+              // Phone number validation using regex pattern
+              
+              const phoneRegExp = /\+[1-9]{3}[0-9]{9}/g
+              // schema validation using yup to validate the phone number if matches with regex pattern
+              let phoneSchemaValidator =  Yup.string().matches(phoneRegExp)
+              let isValid = phoneSchemaValidator.isValidSync(tel) // returns true if valid
+              // Check if the phone number is valid
+              if(!isValid){
+                errors.push({msg: 'Enter a valid Phone Number'})
+              }
+              
             //Ensuring the Password is at least 6 characters
             if (password.length < 6) {
                 errors.push({ msg: 'Password must be at least 6 characters' });
@@ -189,6 +201,7 @@ if (errors.length > 0) {
       errors,
       name,
       email,
+      tel,
       course,
       password,
       password2
@@ -207,6 +220,7 @@ res.render('tutorRegister',  {
     errors,
     name,
     email,
+    tel,
     course,
     password,
     password2
