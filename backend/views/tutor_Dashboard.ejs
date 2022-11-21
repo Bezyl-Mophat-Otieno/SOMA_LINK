@@ -4,14 +4,58 @@
 <!-- //setGoal Modal && setSkill Modal -->
 <%- include('./partials/goalModal.ejs') %> 
 <%- include('./partials/skillModal.ejs') %> 
+
+<div class=" d-inline-flex justify-content-center">
+  <%- include('./partials/messagePrompts.ejs') %> 
+</div>
  <div class="row d-flex">
 
+<div class="col-6">
 
-   <form  class="col-6 align-content-center" action="/api/tutor/uploadFiles" method="post" enctype="multipart/form-data">
-   <label class="form-label" for="customFile">Add File</label>
-   <input type="file" file="file" class="form-control" id="customFile" />
-   <input type="submit" value="SUBMIT" class="btn btn-outline-success btn-block">
-   </form>
+  <form  class=" align-content-center" action="/api/tutor/uploadFiles" method="post" enctype="multipart/form-data">
+  <label class="form-label" for="customFile">UPLOAD FILES</label>
+  <input type="file" name="file" class="form-control" id="customFile" value/>
+  <input type="submit" value="UPLOAD" class="btn btn-success btn-block col-12">
+  </form>
 
+</div>
+
+             <div class="col-6">
+
+
+              <form   action="/api/tutor/uploadNotes" method="POST" > 
+                <div  class="form-group ">  
+                     <div class=" mb-5 gx-3 m-auto">
+                      <div class="form-group mt-3">
+                        <label for="exampleInputEmail1" class="form-label">Course Name </label> <br>
+                        <small id="emailHelp" class="form-text text-muted form-label">Course Name</small>
+                        <input type="text" name="course" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Course Name" >
+                      </div>
+                      <div class="form-groupmt-3">
+                        <label for="exampleInputEmail1" class="form-label">Name</label> <br>
+                        <small id="emailHelp" class="form-text text-muted form-label">Tutor Name</small>
+                        <input type="text" name="tutorName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Tutors Name Name">
+                      </div>
+                       <div class="form-group mt-3">
+                         <label for="exampleInputEmail1" class="form-label">Topic</label> <br>
+                         <small id="emailHelp" class="form-text text-muted form-label">topic name</small>
+                         <input type="text" name="topic" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Enter The Topic " >
+                       </div>
+                     </div>
+                     <div class="mt-3"> 
+                       <textarea class="form-control" name="content" id="text" rows="2"></textarea>
+                     </div>
+                 </div>
+                 
+             
+                     <div class=" d-flex ">
+                   <div class="flex-fill">
+                     <input  type="submit" class=" btn btn-success col-12 " id="submit"   value="UPLOAD">
+                   </div>
+                 
+                 
+                 </div>
+                 </form>
+             </div>   
 
  </div>

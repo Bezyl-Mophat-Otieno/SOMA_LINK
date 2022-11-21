@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Student = require('../Models/studentModel')
 const Message = require ('../Models/messageModel')
+const striptags = require('striptags');
 //@create a goal
 //route POST api/goal
 //@public
@@ -24,7 +25,7 @@ res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     const goal = await Goal.create({
         student: await req.user.id,
-        text: await req.body.text
+        text:striptags(req.body.text)
 
 
 

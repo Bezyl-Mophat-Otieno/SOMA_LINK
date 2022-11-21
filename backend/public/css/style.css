@@ -89,18 +89,34 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
 }
 
 .skill__link {
-  text-align: center;
+  text-align: start;
   display: block;
   text-decoration: none;
   transition: 250ms all;
+  
 }
 
+
+.notes__card {
+  text-align: start;
+  padding-left: 0.75cm;
+  display: block;
+  text-decoration: none;
+  transition: 250ms all;
+  
+}
 .skill__link:hover {
   transform: scale(1.1);
 }
 .skill__card:hover{
   color: black;
 }
+.notes__card:hover{
+  color: black;
+}
+
+
+
 
 
 

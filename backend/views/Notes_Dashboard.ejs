@@ -1,0 +1,61 @@
+
+  <!-- navbar -->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/student/logout">Log-out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="http://localhost:8000/studentDashboard">HOME</a>
+        </li>
+        <!-- <a aria-current="page" href="http://localhost:8000/mySkills" class="btn btn-outline-secondary rounded m-auto position-relative">
+          MY-SKILLS
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          </span>
+        </a> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link active text-muted" data-bs-toggle="modal" href="#setSkill">ADD SKILL</a>
+        </li>
+        <li class="nav-item">
+          <a  href="http://localhost:8000/messaging/inbox"  class="btn  border border-secondary  position-relative m-auto">
+            <i class="fa-solid fa-envelope-open-text fa-1x">Inbox</i>
+              <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"></span> </a> 
+        </li>
+
+      </ul> -->
+      <form class="d-flex" action="/search" method="POST">
+        <input class="form-control me-2" type="search"  name="searchTerm" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </form>
+    </div>
+</nav>
+
+<%- include('./partials/messagePrompts.ejs') %> 
+
+
+<%if(notes.length > 0){ %>
+<div class="row row-cols-1 row-cols-md-3">
+ <%notes.forEach((note)=>{ %>
+  
+  <div class="col  gx-1">
+    <a href="" class="card notes__card mb-5 mt-5 shadow rounded m-auto ">
+      <div class="card-body ">
+        <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> Course : </b>   <%- note.course %>  </h5>
+        <h5 class="card-title2">  <%- note.tutor %>  </h5>
+        <p class="card-text"> <%- note.content %></p>
+        <a  href="#" class="btn btn-success rounded-pill " >View Full </a>
+      </div>
+    </a>
+
+  </div>
+
+
+<%});%>
+<% }else {%>
+<h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Career-Oriented Skills Are Yet To Be Added By Other Users </h1>
+<% } %>
+</div>
