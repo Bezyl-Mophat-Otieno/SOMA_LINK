@@ -19,6 +19,9 @@ status: {
     timestamps:true
  })
 
+ // searching through the skill and Student field 
  skillSchema.index({skill:'text'})
+ //Wildcard search 
+//  skillSchema.index({"$**":'text'})
 
  module.exports = mongoose.model('Skill',skillSchema);

@@ -13,9 +13,10 @@ module.exports = {
 
     if(req.user.role === 'tutor'){
        res.redirect('/tutorDashboard');   
-       console.log(req.user);
     } else{
       res.redirect('/studentDashboard');  
+
+      
     }
   }
 };

@@ -1,4 +1,5 @@
 const Tutor=require('../Models/tutorModel')
+const Image = require('../Models/ImageStore');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const path = require('path')
@@ -17,6 +18,7 @@ const Course = require('../Models/coursesModel')
 const Student = require('../Models/studentModel')
 const registeredCourses = require('../Models/registeredCoursesModel')
 const expressLayouts = require('express-ejs-layouts');
+
 require('dotenv').config()
 
 
@@ -32,8 +34,9 @@ const AfricasTalking = require('africastalking')(credentials)
 //Get the SMS service
 const sms = AfricasTalking.SMS
 
-
-
+const { MulterError } = require('multer');
+const striptags = require('striptags');
+const CourseContent = require("../Models/CourseContentModel")
 
 // GRID FS file uploading to MOngo DB
 // Mongo URI
@@ -45,12 +48,11 @@ const conn = mongoose.createConnection(mongoURI);
 // Init gfs
 let gfs;
 
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-
+conn.once('open', ()=>{
+  gfs = new mongoose.mongo.GridFSBucket(conn.db),{
+    bucketName:'uploads'
+  }
+})
 // Create storage engine
 const storage = new GridFsStorage({
   url: mongoURI,
@@ -70,7 +72,105 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+//Multer Handling the storage 
+const store = multer(
+  { storage , 
+  limits:{fileSize : 20000000},
+  fileFilter:(req , file , cb) => {
+    checkFileType(file , cb)
+
+  }
+  }
+    
+  );
+
+ const  checkFileType = (file,cb)=>{
+    const fileTypes = /jpg|png|gif|image|jpeg/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
+    const mimeType= fileTypes.test(file.mimeType)
+    if(extname || mimeType)  
+    {
+      cb(null , true)
+    }else{
+      cb('fileType');
+     
+
+
+    }
+  }
+
+  // Multer Upload Middleware 
+
+  const uploadMiddleware = (req , res , next )=>{
+const upload = store.single('file')
+upload (req , res , (err)=>{
+  if(err instanceof multer.MulterError){
+    return res.status(400).send('File Too Large')
+  } else if(err){
+    if(err === 'fileType'){
+      return res.status(400).send ('Images file only ')
+    }
+  }
+
+  next()
+
+})
+
+  }
+
+  //Uploading Images to the DB
+  //@Route /api/tutor/uploadFiles
+  // j
+
+  const uploadController = asyncHandler(async (req , res )=>{
+    const {file} = req;
+    const imageUploaded = await Image.create({
+      image:req.file.id
+    })
+    if(imageUploaded){
+     res.send(file)
+            }
+  })
+
+  // Fetch all files in the database
+  //@ Route /api/tutor/files
+  //private 
+
+  const getAllFiles = asyncHandler(async (req,res )=>{
+   const filesUploaded = await gfs.find({}).toArray((err, files)=>{
+      if(!files || files.length ===0){
+        res.send("NO files ")
+        return
+      }
+      res.json(files)
+      
+
+
+
+    })
+    
+  })
+
+  //fetch and display a file based on an id 
+    //@ Route /api/tutor/files/:filename
+    //private 
+    const getSingleFile = asyncHandler(async  (req , res )=>{
+
+      const filename= req.params.filename;
+      gfs.uploads.find({filename:req.params.filename}).toArray((err,files)=>{
+        console.log(files);
+if(!files || files.length==0){
+  res.send("No file with that name ")
+
+}else{
+  gfs.openDownloadStreamByName(req.params.filename).pipe(res);
+}
+
+
+      })
+ 
+     })
+  
 
 
 
@@ -234,7 +334,6 @@ const uploadFiles = asyncHandler(upload.single('file'),async(req,res)=>{
   res.redirect('/tutorDashboard');
 })
 
-
 //@ get Files 
 //GET /api/tutor/getFiles
 //private 
@@ -306,6 +405,59 @@ const sendCourseUpdatesForm = asyncHandler(async(req, res)=>{
         errors.push({msg:'No student has joined your course.You can not send any Course Updates!'})
       }
     res.render('tutorSendCourseUpdates',{title: 'COURSE UPDATES',course,tutor,totalStudent,errors })
+
+
+// @ Upploading notes by the Tutor
+// POST/api/tutor/uploadNotes
+//private 
+const uploadNotes = asyncHandler (async ( req, res) =>{
+const { course,topic, content,tutorName } = req.body ;
+if(!course || !topic|| !content || !tutorName){
+
+
+    res.status = 400;
+    req.flash('error_msg', ' FAILED TO SEND COURSE CONTENT ! ( ensure you fill  in all fields to send notes ) ')
+    res.redirect('/tutorDashboard')
+
+
+}else{
+    
+
+let content = await CourseContent.create({
+tutor:req.user.name,
+course:req.body.course,
+content: striptags (req.body.content)
+})
+
+if(content) {
+
+    
+ req.flash('success_msg', 'Notes uploaded Successfully !')
+res.redirect('/tutorDashboard')
+
+}
+
+}
+
+
+});
+
+
+
+
+//@ Notes Dashboard
+//@route Get api/tutor/Notes
+//public
+
+
+const getNotesUploaded =asyncHandler (async(req , res )=>{
+  // let loggedInUser = req.user.name ;
+  // const notesUploads = await CourseContent.countDocuments({})
+  // const myTotalNotesUploads = await Skill.countDocuments({tutor:req.user.name});
+  const notes = await CourseContent.find({}).lean();
+  res.render('Notes_Dashboard',{title:'Notes',notes});
+})
+
     
   }
   return
@@ -353,9 +505,15 @@ module.exports={
 registerTutor,
 tutorLogin,
 tutorLogout,
+uploadMiddleware,
+uploadController,
+getAllFiles,
 getFiles,
 uploadFiles,
 myCourses,
 sendCourseUpdatesForm,
 sendCourseUpdate
+getSingleFile,
+uploadNotes,
+getNotesUploaded
     };

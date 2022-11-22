@@ -1,5 +1,5 @@
 {
-  "name": "Somalink",
+  "name": "SomaLink",
   "version": "1.0.0",
   "description": "A Web Application System That Enables Free Access To Digital Learning Resources By Needy Students  Using USSD As a Micro Service For Offline Access ",
   "main": "backend/server.js",
@@ -38,6 +38,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
+
     "striptags": "^3.2.0",
     "yup": "^0.32.11"
   },
