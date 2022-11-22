@@ -1,5 +1,5 @@
 {
-  "name": "Soma Link",
+  "name": "Somalink",
   "version": "1.0.0",
   "description": "A Web Application System That Enables Free Access To Digital Learning Resources By Needy Students  Using USSD As a Micro Service For Offline Access ",
   "main": "backend/server.js",
