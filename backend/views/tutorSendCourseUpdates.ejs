@@ -1,0 +1,33 @@
+<h5 class="text-start display-5 my-4">Send Updates</h5>
+  <!-- navbar -->
+<%- include('./partials/headerTutorDashboard.ejs') %> 
+<!-- navbar -->
+
+
+  <div class="container mt-5 col-12">
+    <%- include('./partials/messagePrompts.ejs') %> 
+    <div class="row col-12">
+      <div class="col-md-6 m-auto col-12">
+        <h2><%- course.title %></h2>
+        <form action="/api/tutor/sendUpdates/<%- course.id %>" method="POST">
+          
+
+          <div class="custom-file mb-3">
+            <label for="text" class="form-label text-bold" >Topic Name</label>
+            <input type="text" name="topic" id="title" class="form-control " required>
+            <label for="text" class="form-label text-bold mt-4">Updates</label>
+            <textarea name="updates" id="description" class="form-control" required></textarea>
+          </div>
+          
+          <%if (totalStudent === 0) { %>
+            <input type="submit" value="Send Updates" class="btn btn-success col-12" disabled="disabled" >
+          <% } else{%>
+            <input type="submit" value="Send Updates" class="btn btn-success col-12">
+          <% } %>
+          
+        </form>
+        <hr>
+      </div>
+      
+    </div>
+  </div>

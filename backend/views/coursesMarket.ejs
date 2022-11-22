@@ -1,0 +1,60 @@
+
+  <!-- navbar -->
+   <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/api/student/logout">Log-out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/studentDashboard">HOME</a>
+          </li>
+          <a aria-current="page" href="http://localhost:8000/myCourses" class="btn btn-outline-secondary rounded m-auto position-relative">
+            COURSES_MARKET
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <%= totalCourses%> 
+            </span>
+          </a>
+
+        </ul>
+        <form class="d-flex" action="/search" method="POST">
+          <input class="form-control me-2" type="search"  name="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+      </div>
+  </nav>
+
+  <%- include('./partials/messagePrompts.ejs') %> 
+
+ 
+ <%if(totalCourses > 0){ %>
+  <div class="row row-cols-1 row-cols-md-3">
+   <%courses.forEach((course)=>{ %>
+    
+    <div class="col gx-1">
+      <a href="http://localhost:8000/api/courses/getCourse/<%-course.id  %> " class="card skill__card mb-5 mt-5 shadow rounded m-auto skill__link ">
+        <div class="card-body ">
+          <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> ADDED-ON : </b>   <%- course.createdAt %>  </h5>
+          <h5 class="card-title2"> <%- course.title %>  </h5>
+          <p class="card-text"> <%- course.description %></p>
+          <form action="/api/courses/joinCourse/<%-course.id %>" method="POST">
+            <button type="submit"  class="btn btn-sm btn-outline-secondary" >JOIN</button>
+          </form>
+        </div>
+      </a>
+
+    </div>
+    <!-- mail modal -->
+
+
+<%});%>
+<% }else {%>
+
+  
+  
+  <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Courses Are Yet To Be Added By Other Tutors </h1>
+  <% } %>
+</div>

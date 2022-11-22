@@ -82,21 +82,21 @@ res.render('studentRegister',  {
     
   });
 
-            }else{
-//Generate salt that will be used in encrypting the password(hashing the password)
-const salt = await bcrypt.genSalt(10);
-const hashedPassword = await bcrypt.hash(password,salt);
+    }else{
+  //Generate salt that will be used in encrypting the password(hashing the password)
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password,salt);
 
-            //Create student
-                const student =await Student.create({
-name:req.body.name,
-course:req.body.course,
-email:req.body.email,
-tel:req.body.tel,
-password:hashedPassword,
-role:req.body.role,
+  //Create student
+      const student =await Student.create({
+  name:req.body.name,
+  course:req.body.course,
+  email:req.body.email,
+  tel:req.body.tel,
+  password:hashedPassword,
+  role:"student",
 
-                });
+      });
 
                                 // if student was registered successfully
 if(student){

@@ -4,12 +4,12 @@
 <!-- //setGoal Modal && setSkill Modal -->
 <%- include('./partials/goalModal.ejs') %> 
 <%- include('./partials/skillModal.ejs') %> 
+<!-- navbar -->
 
 <div class=" d-inline-flex justify-content-center">
   <%- include('./partials/messagePrompts.ejs') %> 
 </div>
  <div class="row d-flex">
-
 <div class="col-6">
   <form  class=" align-content-center" action="/api/tutor/uploadFiles" method="post" enctype="multipart/form-data">
   <label class="form-label" for="customFile">UPLOAD FILES</label>

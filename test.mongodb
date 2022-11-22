@@ -1,0 +1,76 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// const database = 'test';
+// const collection = 'NEW_COLLECTION_NAME';
+
+// // The current database to use.
+// use(database);
+
+// // Create a new collection.
+// db.createCollection(collection);
+// db.registeredcourses.aggregate([
+//   /**
+//    * query: The query in MQL.
+//    */
+//   $match: {
+//     "courseID":""
+//   }
+// ])
+db.registeredcourses.find({courseID:ObjectId("62ea8700ebd2f7986564a548")})
+
+// db.student.aggregate([
+//     {
+//       $match: {
+//       studentID:ObjectId("62ea8700ebd2f7986564a548")
+//     }
+//   },
+//   {
+//     /**
+//      * from: The target collection.
+//      * localField: The local join field.
+//      * foreignField: The target join field.
+//      * as: The name for the results.
+//      * pipeline: Optional pipeline to run on the foreign collection.
+//      * let: Optional variables to use in the pipeline field stages.
+//      */
+//     $lookup: {
+//       from: db.registeredcourses,
+//       localField: "studentID",
+//       foreignField: "studentID",
+//       as: "result"
+//     }
+//   }
+  
+  // ]);
+
+// "studentID": {
+//   "$oid": "637a1d755ed666a43d81c0e8"
+// The prototype form to create a collection:
+/* db.createCollection( <name>,
+  {
+    capped: <boolean>,
+    autoIndexId: <boolean>,
+    size: <number>,
+    max: <number>,
+    storageEngine: <document>,
+    validator: <document>,
+    validationLevel: <string>,
+    validationAction: <string>,
+    indexOptionDefaults: <document>,
+    viewOn: <string>,
+    pipeline: <pipeline>,
+    collation: <document>,
+    writeConcern: <document>,
+    timeseries: { // Added in MongoDB 5.0
+      timeField: <string>, // required for time series collections
+      metaField: <string>,
+      granularity: <string>
+    },
+    expireAfterSeconds: <number>,
+    clusteredIndex: <document>, // Added in MongoDB 5.3
+  }
+)*/
+
+// More information on the `createCollection` command can be found at:
+// https://www.mongodb.com/docs/manual/reference/method/db.createCollection/
