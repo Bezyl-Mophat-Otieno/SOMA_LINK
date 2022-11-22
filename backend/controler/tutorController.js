@@ -1,4 +1,5 @@
 const Tutor=require('../Models/tutorModel')
+const Image = require('../Models/ImageStore');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const path = require('path')
@@ -11,8 +12,11 @@ const Grid = require('gridfs-stream');
 const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
+const Yup = require('yup')
 const expressLayouts = require('express-ejs-layouts');
-
+const { MulterError } = require('multer');
+const striptags = require('striptags');
+const CourseContent = require("../Models/CourseContentModel")
 
 
 
@@ -26,12 +30,11 @@ const conn = mongoose.createConnection(mongoURI);
 // Init gfs
 let gfs;
 
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-
+conn.once('open', ()=>{
+  gfs = new mongoose.mongo.GridFSBucket(conn.db),{
+    bucketName:'uploads'
+  }
+})
 // Create storage engine
 const storage = new GridFsStorage({
   url: mongoURI,
@@ -51,7 +54,105 @@ const storage = new GridFsStorage({
     });
   }
 });
-const upload = multer({ storage });
+//Multer Handling the storage 
+const store = multer(
+  { storage , 
+  limits:{fileSize : 20000000},
+  fileFilter:(req , file , cb) => {
+    checkFileType(file , cb)
+
+  }
+  }
+    
+  );
+
+ const  checkFileType = (file,cb)=>{
+    const fileTypes = /jpg|png|gif|image|jpeg/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
+    const mimeType= fileTypes.test(file.mimeType)
+    if(extname || mimeType)  
+    {
+      cb(null , true)
+    }else{
+      cb('fileType');
+     
+
+
+    }
+  }
+
+  // Multer Upload Middleware 
+
+  const uploadMiddleware = (req , res , next )=>{
+const upload = store.single('file')
+upload (req , res , (err)=>{
+  if(err instanceof multer.MulterError){
+    return res.status(400).send('File Too Large')
+  } else if(err){
+    if(err === 'fileType'){
+      return res.status(400).send ('Images file only ')
+    }
+  }
+
+  next()
+
+})
+
+  }
+
+  //Uploading Images to the DB
+  //@Route /api/tutor/uploadFiles
+  // j
+
+  const uploadController = asyncHandler(async (req , res )=>{
+    const {file} = req;
+    const imageUploaded = await Image.create({
+      image:req.file.id
+    })
+    if(imageUploaded){
+     res.send(file)
+            }
+  })
+
+  // Fetch all files in the database
+  //@ Route /api/tutor/files
+  //private 
+
+  const getAllFiles = asyncHandler(async (req,res )=>{
+   const filesUploaded = await gfs.find({}).toArray((err, files)=>{
+      if(!files || files.length ===0){
+        res.send("NO files ")
+        return
+      }
+      res.json(files)
+      
+
+
+
+    })
+    
+  })
+
+  //fetch and display a file based on an id 
+    //@ Route /api/tutor/files/:filename
+    //private 
+    const getSingleFile = asyncHandler(async  (req , res )=>{
+
+      const filename= req.params.filename;
+      gfs.uploads.find({filename:req.params.filename}).toArray((err,files)=>{
+        console.log(files);
+if(!files || files.length==0){
+  res.send("No file with that name ")
+
+}else{
+  gfs.openDownloadStreamByName(req.params.filename).pipe(res);
+}
+
+
+      })
+ 
+     })
+  
 
 
 
@@ -61,14 +162,25 @@ const upload = multer({ storage });
 const registerTutor= asyncHandler(async (req,res)=>{
     
 //Making sure all the details of the student are captured 
-            const { name , course, email, password ,password2 } = req.body;
+            const { name , course,tel, email, password ,password2 } = req.body;
 let errors = [];
 //Ensuring all fields are filled
-            if(!name || !email || !course || !password || !password2){
+            if(!name || !email || !course || !tel || !password || !password2){
   res.status(400)
   errors.push({msg:'kindly fill in all fields'});
                 
             }else{
+              // Phone number validation using regex pattern
+              
+              const phoneRegExp = /\+[1-9]{3}[0-9]{9}/g
+              // schema validation using yup to validate the phone number if matches with regex pattern
+              let phoneSchemaValidator =  Yup.string().matches(phoneRegExp)
+              let isValid = phoneSchemaValidator.isValidSync(tel) // returns true if valid
+              // Check if the phone number is valid
+              if(!isValid){
+                errors.push({msg: 'Enter a valid Phone Number'})
+              }
+              
             //Ensuring the Password is at least 6 characters
             if (password.length < 6) {
                 errors.push({ msg: 'Password must be at least 6 characters' });
@@ -89,6 +201,7 @@ if (errors.length > 0) {
       errors,
       name,
       email,
+      tel,
       course,
       password,
       password2
@@ -107,6 +220,7 @@ res.render('tutorRegister',  {
     errors,
     name,
     email,
+    tel,
     course,
     password,
     password2
@@ -188,16 +302,6 @@ const tutorLogin= asyncHandler(async (req , res , next)=>{
 
   });
 
-//@ tutor upload files 
-// POST /api/tutor/uploadFiles
-//private 
-
-
-const uploadFiles = asyncHandler(upload.single('file'),async(req,res)=>{
-  res.redirect('/tutorDashboard');
-})
-
-
 //@ get Files 
 //GET /api/tutor/getFiles
 //private 
@@ -246,6 +350,72 @@ res.redirect('/');
 
 
 
+// @ Upploading notes by the Tutor
+// POST/api/tutor/uploadNotes
+//private 
+const uploadNotes = asyncHandler (async ( req, res) =>{
+const { course,topic, content,tutorName } = req.body ;
+if(!course || !topic|| !content || !tutorName){
+
+
+    res.status = 400;
+    req.flash('error_msg', ' FAILED TO SEND COURSE CONTENT ! ( ensure you fill  in all fields to send notes ) ')
+    res.redirect('/tutorDashboard')
+
+
+}else{
+    
+
+let content = await CourseContent.create({
+tutor:req.user.name,
+course:req.body.course,
+content: striptags (req.body.content)
+})
+
+if(content) {
+
+    
+ req.flash('success_msg', 'Notes uploaded Successfully !')
+res.redirect('/tutorDashboard')
+
+}
+
+}
+
+
+});
+
+
+
+
+//@ Notes Dashboard
+//@route Get api/tutor/Notes
+//public
+
+
+const getNotesUploaded =asyncHandler (async(req , res )=>{
+  // let loggedInUser = req.user.name ;
+  // const notesUploads = await CourseContent.countDocuments({})
+  // const myTotalNotesUploads = await Skill.countDocuments({tutor:req.user.name});
+  const notes = await CourseContent.find({}).lean();
+  res.render('Notes_Dashboard',{title:'Notes',notes});
+})
+
+
+
+//@StudentDashboard
+//@route Get api/student/Notes/fullView
+//private
+const viewFullNotesContent =asyncHandler(async(req,res)=>{
+const selectedNotes = await CourseContent.findById({_id:req.params.id}).lean();
+res.render('selectedNotesView',{title:'Notes',selectedNotes})
+
+})
+
+
+
+
+
     
     
 
@@ -254,6 +424,13 @@ res.redirect('/');
 registerTutor,
 tutorLogin,
 tutorLogout,
+uploadMiddleware,
+uploadController,
+getAllFiles,
 getFiles,
-uploadFiles
+getSingleFile,
+uploadNotes,
+getNotesUploaded,
+viewFullNotesContent
+
     };

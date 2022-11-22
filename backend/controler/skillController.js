@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Skill = require('../Models/skillSetModel')
 const Message = require ('../Models/messageModel')
+const striptags = require('striptags');
+
 
 //@Add a skill
 //route POST api/skill 
@@ -20,13 +22,13 @@ req.body.user = req.user.id ;
     if(!text || !status){
 res.status(400)
 errors.push({msg:'Kindly Enter Information In All Fields'});
-res.render('dashboard',{errors,goals,totalMessages})
+res.render('Student_Dashboard',{errors,goals,totalMessages})
 
     }else{
 
         let skill = await Skill.create({
             student: await req.user.email,
-            skill: await req.body.text,
+            skill: await striptags (req.body.text),
             status: await req.body.status
     
     

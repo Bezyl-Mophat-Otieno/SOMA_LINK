@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Goal = require('../Models/goalModel')
 const Student = require('../Models/studentModel')
 const Message = require ('../Models/messageModel')
+const striptags = require('striptags');
 //@create a goal
 //route POST api/goal
 //@public
@@ -24,7 +25,7 @@ res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     const goal = await Goal.create({
         student: await req.user.id,
-        text: await req.body.text
+        text:striptags(req.body.text)
 
 
 
@@ -32,7 +33,7 @@ res.render('dashboard',{ title: 'DASHBOARD', errors,goals,totalMessages})
 
     if(goal){
 
-        res.redirect('/dashboard')
+        res.redirect('/studentDashboard')
     }
 
 }
@@ -96,7 +97,7 @@ const updateGoal =asyncHandler ( async (req,res)=>{
         return
     } else{
            goal = await Goal.findOneAndUpdate({_id:req.params.id} , req.body , {new:true ,validators:true} );
-    res.redirect('/dashboard')
+    res.redirect('/studentDashboard')
     return
 
     }
@@ -134,7 +135,7 @@ const deleteGoal =asyncHandler ( async (req,res)=>{
         res.render('error/404');
     }else{
     await Goal.remove({_id:req.params.id});
-    res.redirect('/dashboard')
+    res.redirect('/studentDashboard')
     }
 
 

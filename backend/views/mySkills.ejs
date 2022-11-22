@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://localhost:8000/dashboard">HOME</a>
+            <a class="nav-link active" aria-current="page" href="http://localhost:8000/studentDashboard">HOME</a>
           </li>
           <a aria-current="page" href="http://localhost:8000/api/skill/skillsMarket" class="btn btn-outline-secondary rounded position-relative m-auto">
             SKILLS MARKET
@@ -59,7 +59,7 @@
    <%mySkills.forEach((skill)=>{ %>
 
 
-    <div class="col  ">
+    <div class="col ">
       <div class="card mb-5 mt-5 shadow rounded m-auto ">
         <div class="card-body">
           <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> ADDED-ON : </b> <%- skill.createdAt %>  </h5>
@@ -69,7 +69,7 @@
              <div>
                <form action="/api/skill/<%- skill._id %>" method="POST" id="delete-form">
                  <input type="hidden" name="_method" value="DELETE">
-                 <button type="submit" class="btn btn-outline-danger d- " >
+                 <button type="submit" class="btn btn-outline-danger  " >
                      <i class="fas fa-trash"></i>
                  </button>
                </form>

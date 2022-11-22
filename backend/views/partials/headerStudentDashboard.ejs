@@ -39,6 +39,13 @@
               <i class="fa-solid fa-envelope-open-text fa-1x">Inbox</i>
                 <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger"> <%- totalMessages %> </span> </a> 
           </li>
+          <a aria-current="page" href="http://localhost:8000/api/tutor/Notes" class="btn btn-outline-secondary rounded m-auto position-relative">
+            Notes-Uploaded
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <%= notesUploads %> 
+            </span>
+            </a>
+
         </ul>
         <form class="d-flex" action="http://localhost:8000/search" method="POST">
           <input class="form-control me-2" type="search"  name="search" placeholder="search" aria-label="Search">
