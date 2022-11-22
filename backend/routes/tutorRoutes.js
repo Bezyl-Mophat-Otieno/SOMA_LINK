@@ -16,7 +16,8 @@ getSingleFile,
 uploadNotes, 
 getNotesUploaded,
 sendCourseUpdatesForm,
-sendCourseUpdate
+sendCourseUpdate,
+myCourses
 } = require('../controler/tutorController');
 
 router.post('/',registerTutor);

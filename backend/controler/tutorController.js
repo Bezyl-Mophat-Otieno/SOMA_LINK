@@ -12,20 +12,19 @@ const Grid = require('gridfs-stream');
 const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
-const striptags = require('striptags');
+const Student = require('../Models/studentModel');
+const Course = require('../Models/coursesModel.js')
+const registeredCourses = require('../Models/registeredCoursesModel.js');
 const Yup = require('yup')
-const Course = require('../Models/coursesModel')
-const Student = require('../Models/studentModel')
-const registeredCourses = require('../Models/registeredCoursesModel')
 const expressLayouts = require('express-ejs-layouts');
-
-require('dotenv').config()
-
+const { MulterError } = require('multer');
+const striptags = require('striptags');
+const CourseContent = require("../Models/CourseContentModel")
 
 // Set app credentials
 const credentials = {
-    apiKey: process.env.AFRICASTALKING_APIKEY,
-    username: process.env.USERNAME,
+  apiKey: process.env.AFRICASTALKING_APIKEY,
+  username: process.env.USERNAME,
 }
 
 //Initialize the SDK
@@ -34,9 +33,6 @@ const AfricasTalking = require('africastalking')(credentials)
 //Get the SMS service
 const sms = AfricasTalking.SMS
 
-const { MulterError } = require('multer');
-const striptags = require('striptags');
-const CourseContent = require("../Models/CourseContentModel")
 
 // GRID FS file uploading to MOngo DB
 // Mongo URI
@@ -225,40 +221,40 @@ if (errors.length > 0) {
       password2
       
     });
-}
-else{
-  //Check if a tutor already exists
-  const tutorExist =await Tutor.findOne({email});
-  if(tutorExist){
-  res.status(400)
-  errors.push({msg:'Tutor already exists'})
+} else{
 
-  res.render('tutorRegister',  {
-    title:'REGISTER',
-      errors,
-      name,
-      email,
-      tel,
-      course,
-      password,
-      password2
-      
-    });
+            //Check if a tutor already exists
+            const tutorExist =await Tutor.findOne({email});
+            if(tutorExist){
+res.status(400)
+errors.push({msg:'Tutor already exists'})
 
-  }else{
-    //Generate salt that will be used in encrypting the password(hashing the password)
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password,salt);
-    //Create A tutor
-    console.log(req.body)
-    const tutor = await Tutor.create({
-    name:req.body.name,
-    course:req.body.course,
-    email:req.body.email,
-    tel:req.body.tel,
-    password:hashedPassword,
-    role:"tutor",
-    });
+res.render('tutorRegister',  {
+  title:'REGISTER',
+    errors,
+    name,
+    email,
+    tel,
+    course,
+    password,
+    password2
+    
+  });
+
+            }else{
+//Generate salt that will be used in encrypting the password(hashing the password)
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password,salt);
+
+            //Create A tutor
+                const tutor = await Tutor.create({
+name:req.body.name,
+course:req.body.course,
+email:req.body.email,
+password:hashedPassword,
+role:req.body.role,
+
+                });
 
                                 // if student was registered successfully
 if(tutor){
@@ -283,10 +279,6 @@ if(tutor){
 //@route POST api/tutor/login
 //@access Public
 
-const getCreateCourse = asyncHandler(async (req, res, next) =>{
-  res.render()
-})
-
 
 const tutorLogin= asyncHandler(async (req , res , next)=>{
   
@@ -304,35 +296,25 @@ const tutorLogin= asyncHandler(async (req , res , next)=>{
 
   // re-render login page displaying the data keyed in.
   if (errors.length > 0) {
-    res.render('tutorLogin',  {
-      title:'LOGIN',
-      errors,
-      email,
-      password
+  res.render('tutorLogin',  {
+    title:'LOGIN',
+    errors,
+    email,
+    password
 
-    });
-  }else{ 
+  });
+
+  }else{    
       // Login Handling
       passport.authenticate('local', {
-        successRedirect: ('/tutorDashboard'),
+        successRedirect: '/tutorDashboard',
         failureRedirect: '/tutorLogin',
         failureFlash: true
       })(req, res, next);
-      
       return
   }
 
   });
-
-//@ tutor upload files 
-// POST /api/tutor/uploadFiles
-//private 
-
-
-const uploadFiles = asyncHandler(upload.single('file'),async(req,res)=>{
-  console.log(req.user)
-  res.redirect('/tutorDashboard');
-})
 
 //@ get Files 
 //GET /api/tutor/getFiles
@@ -359,27 +341,6 @@ const getFiles = asyncHandler(async (req, res)=>{
 
 })
 
-
-
-
-
-
-// @ tutor Logout function
-//GET /api/tutor/logout
-//private 
-const tutorLogout =  asyncHandler (async (req , res , next) =>{
-
-req.logout((err)=>{
-  if(err){
-    return next(err);
-  }
-
-req.flash('success_msg', 'You Are Successfully Logged Out');
-res.redirect('/');
-});
-
-}) 
-
 const myCourses = asyncHandler (async (req , res )=>{
   const courses = await Course.find({createdBy:req.user.id})
   const totalCourses = await Course.countDocuments(Course.find({createdBy:req.user.id}))
@@ -405,6 +366,28 @@ const sendCourseUpdatesForm = asyncHandler(async(req, res)=>{
         errors.push({msg:'No student has joined your course.You can not send any Course Updates!'})
       }
     res.render('tutorSendCourseUpdates',{title: 'COURSE UPDATES',course,tutor,totalStudent,errors })
+  }
+})
+
+
+
+
+// @ tutor Logout function
+//GET /api/tutor/logout
+//private 
+const tutorLogout =  asyncHandler (async (req , res , next) =>{
+
+req.logout((err)=>{
+  if(err){
+    return next(err);
+  }
+
+req.flash('success_msg', 'You Are Successfully Logged Out');
+res.redirect('/');
+});
+
+}) 
+
 
 
 // @ Upploading notes by the Tutor
@@ -458,11 +441,6 @@ const getNotesUploaded =asyncHandler (async(req , res )=>{
   res.render('Notes_Dashboard',{title:'Notes',notes});
 })
 
-    
-  }
-  return
-})
-
 const sendCourseUpdate = asyncHandler(async(req, res)=>{ 
   let errors = []
   let phoneNumber = []
@@ -477,11 +455,13 @@ const sendCourseUpdate = asyncHandler(async(req, res)=>{
     console.log(student.tel)
     update = req.body.topic + "\n" + striptags(req.body.updates).replace(/[\r\n]/gm, '')
     let res = await sendMessage(student.tel, update)
-    console.log(res)
+    console.log(update)
+    console.log(res['SMSMessageData']['Recipients'])
     console.log(student.tel)
   
   });
   console.log(phoneNumber)
+  req.flash('success_msg',`Course update successfully sent!`)
   res.redirect(`/api/tutor/sendCourseUpdatesForm/${req.params.id}`,course,errors,tutor,totalStudent)
 })
 
@@ -498,9 +478,11 @@ let sendMessage = async(studentNumber, update)=> {
   return await sms.send(options)
 
 } 
+
+    
     
 
-module.exports={
+    module.exports={
 
 registerTutor,
 tutorLogin,
@@ -509,11 +491,11 @@ uploadMiddleware,
 uploadController,
 getAllFiles,
 getFiles,
-uploadFiles,
+getSingleFile,
 myCourses,
 sendCourseUpdatesForm,
-sendCourseUpdate
-getSingleFile,
+sendCourseUpdate,
 uploadNotes,
 getNotesUploaded
+
     };

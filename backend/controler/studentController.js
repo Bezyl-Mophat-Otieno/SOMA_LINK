@@ -94,7 +94,7 @@ res.render('studentRegister',  {
   email:req.body.email,
   tel:req.body.tel,
   password:hashedPassword,
-  role:req.body.role,
+  role:"student",
 
       });
 
