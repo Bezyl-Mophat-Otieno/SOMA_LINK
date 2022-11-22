@@ -104,6 +104,7 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
   text-decoration: none;
   transition: 250ms all;
   
+  
 }
 .skill__link:hover {
   transform: scale(1.1);

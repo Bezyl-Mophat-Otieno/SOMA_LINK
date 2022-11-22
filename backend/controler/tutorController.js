@@ -403,6 +403,17 @@ const getNotesUploaded =asyncHandler (async(req , res )=>{
 
 
 
+//@StudentDashboard
+//@route Get api/student/Notes/fullView
+//private
+const viewFullNotesContent =asyncHandler(async(req,res)=>{
+const selectedNotes = await CourseContent.findById({_id:req.params.id}).lean();
+res.render('selectedNotesView',{title:'Notes',selectedNotes})
+
+})
+
+
+
 
 
     
@@ -419,6 +430,7 @@ getAllFiles,
 getFiles,
 getSingleFile,
 uploadNotes,
-getNotesUploaded
+getNotesUploaded,
+viewFullNotesContent
 
     };

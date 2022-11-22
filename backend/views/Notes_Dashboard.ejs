@@ -38,7 +38,7 @@
 
 
 <%if(notes.length > 0){ %>
-<div class="row row-cols-1 row-cols-md-3">
+<div class="row row-cols-1 row-cols-md-2">
  <%notes.forEach((note)=>{ %>
   
   <div class="col  gx-1">
@@ -47,7 +47,7 @@
         <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> Course : </b>   <%- note.course %>  </h5>
         <h5 class="card-title2">  <%- note.tutor %>  </h5>
         <p class="card-text"> <%- note.content %></p>
-        <a  href="#" class="btn btn-success rounded-pill " >View Full </a>
+        <a  href="http://localhost:8000/api/tutor/Notes/<%- note._id %> " class="btn btn-success rounded-pill " >View Full </a>
       </div>
     </a>
 
@@ -56,6 +56,6 @@
 
 <%});%>
 <% }else {%>
-<h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >Career-Oriented Skills Are Yet To Be Added By Other Users </h1>
+<h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No Notes Uploaded Recently </h1>
 <% } %>
 </div>
