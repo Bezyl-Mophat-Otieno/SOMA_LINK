@@ -4,12 +4,12 @@
 <!-- //setGoal Modal && setSkill Modal -->
 <%- include('./partials/goalModal.ejs') %> 
 <%- include('./partials/skillModal.ejs') %> 
+<!-- navbar -->
 
 <div class=" d-inline-flex justify-content-center">
   <%- include('./partials/messagePrompts.ejs') %> 
 </div>
  <div class="row d-flex">
-
 <div class="col-6">
   <form  class=" align-content-center" action="/api/tutor/uploadFiles" method="post" enctype="multipart/form-data">
   <label class="form-label" for="customFile">UPLOAD FILES</label>
@@ -33,6 +33,8 @@
                       <div class="form-groupmt-3">
                         <label for="exampleInputEmail1" class="form-label">Name</label> <br>
                         <small id="emailHelp" class="form-text text-muted form-label">Tutor Name</small>
+                        <input type="text" name="tutorName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Tutors Name Name">
+                        <input type="text" name="tutorName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value=<%- tutor.name%> disabled>
                         <input type="text" name="tutorName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value=<%- tutor.name%> disable >
                       </div>
                        <div class="form-group mt-3">

@@ -12,12 +12,26 @@ const Grid = require('gridfs-stream');
 const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
+const Student = require('../Models/studentModel');
+const Course = require('../Models/coursesModel.js')
+const registeredCourses = require('../Models/registeredCoursesModel.js');
 const Yup = require('yup')
 const expressLayouts = require('express-ejs-layouts');
 const { MulterError } = require('multer');
 const striptags = require('striptags');
 const CourseContent = require("../Models/CourseContentModel")
 
+// Set app credentials
+const credentials = {
+  apiKey: process.env.AFRICASTALKING_APIKEY,
+  username: process.env.USERNAME,
+}
+
+//Initialize the SDK
+const AfricasTalking = require('africastalking')(credentials)
+
+//Get the SMS service
+const sms = AfricasTalking.SMS
 
 
 // GRID FS file uploading to MOngo DB
@@ -327,7 +341,33 @@ const getFiles = asyncHandler(async (req, res)=>{
 
 })
 
+const myCourses = asyncHandler (async (req , res )=>{
+  const courses = await Course.find({createdBy:req.user.id})
+  const totalCourses = await Course.countDocuments(Course.find({createdBy:req.user.id}))
+  if(courses){
+    res.render('tutorCoursesMarket',{title:'TUTOR COURSES',courses,totalCourses})
+    return
+  }
+  else{
+    res.status(400).json({msg:'an error occurred'})
+    return
+  }
+})
 
+const sendCourseUpdatesForm = asyncHandler(async(req, res)=>{
+  let errors =[]
+  const studentIds = await registeredCourses.find({courseID: req.params.id})
+  const totalStudent = studentIds.length
+  const course = await Course.findById(req.params.id)
+  const tutor = await Tutor.find({_id: course.createdBy})
+  if(tutor && course){
+
+      if(totalStudent === 0){
+        errors.push({msg:'No student has joined your course.You can not send any Course Updates!'})
+      }
+    res.render('tutorSendCourseUpdates',{title: 'COURSE UPDATES',course,tutor,totalStudent,errors })
+  }
+})
 
 
 
@@ -401,8 +441,42 @@ const getNotesUploaded =asyncHandler (async(req , res )=>{
   res.render('Notes_Dashboard',{title:'Notes',notes});
 })
 
+const sendCourseUpdate = asyncHandler(async(req, res)=>{ 
+  let errors = []
+  let phoneNumber = []
+  const studentIds = await registeredCourses.find({courseID: req.params.id})
+  const totalStudent = studentIds.length
+  const course = await Course.findOne({courseID: new Object(req.params.id)})
+  const tutor = await Tutor.findById(course.createdBy)
+  console.log(tutor.tel)
+  // console.log(studentIds)
+  studentIds.forEach(async studentId => {
+    let student = await Student.findById(studentId.studentID)
+    console.log(student.tel)
+    update = req.body.topic + "\n" + striptags(req.body.updates).replace(/[\r\n]/gm, '')
+    let res = await sendMessage(student.tel, update)
+    console.log(update)
+    console.log(res['SMSMessageData']['Recipients'])
+    console.log(student.tel)
+  
+  });
+  console.log(phoneNumber)
+  req.flash('success_msg',`Course update successfully sent!`)
+  res.redirect(`/api/tutor/sendCourseUpdatesForm/${req.params.id}`,course,errors,tutor,totalStudent)
+})
 
-
+let sendMessage = async(studentNumber, update)=> {
+  let errors = []
+  const options = {
+      //set the numbers you want to send to international format
+      to: '+254111723326',
+      // Set your message
+      message: update,
+      // Set your shortcode or senderID
+      from: ''
+  }
+  return await sms.send(options)
+} 
 //@StudentDashboard
 //@route Get api/student/Notes/fullView
 //private
@@ -429,6 +503,9 @@ uploadController,
 getAllFiles,
 getFiles,
 getSingleFile,
+myCourses,
+sendCourseUpdatesForm,
+sendCourseUpdate,
 uploadNotes,
 getNotesUploaded,
 viewFullNotesContent
