@@ -476,8 +476,19 @@ let sendMessage = async(studentNumber, update)=> {
       from: ''
   }
   return await sms.send(options)
-
 } 
+//@StudentDashboard
+//@route Get api/student/Notes/fullView
+//private
+const viewFullNotesContent =asyncHandler(async(req,res)=>{
+const selectedNotes = await CourseContent.findById({_id:req.params.id}).lean();
+res.render('selectedNotesView',{title:'Notes',selectedNotes})
+
+})
+
+
+
+
 
     
     
@@ -496,6 +507,7 @@ myCourses,
 sendCourseUpdatesForm,
 sendCourseUpdate,
 uploadNotes,
-getNotesUploaded
+getNotesUploaded,
+viewFullNotesContent
 
     };
