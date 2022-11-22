@@ -7,6 +7,7 @@ const path = require('path');
 const striptags = require("striptags");
 const registeredCourses = require('../Models/registeredCoursesModel');
 const Student = require('../Models/studentModel');
+const tutorModel = require('../Models/tutorModel');
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
         cb(null, 'image-uploads')
@@ -46,6 +47,11 @@ const createCourse = asyncHandler(async (req,res, next)=>{
         }
 
 }
+})
+
+const createCourseForm = asyncHandler(async (req, res)=>{
+    let tutor = await Tutor.findById(req.user.id)
+    return res.render('createCourse',{title: 'Create Course',tutor})
 })
 
 
@@ -214,4 +220,4 @@ const joinCourse = asyncHandler(async (req,res)=>{
     
 })
 
-module.exports = {createCourse,getAllCourses,joinCourse, updateCourse,deleteCourse,getMyCourses}
+module.exports = {createCourse,createCourseForm, getAllCourses,joinCourse, updateCourse,deleteCourse,getMyCourses}
