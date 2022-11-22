@@ -11,10 +11,10 @@ const Grid = require('gridfs-stream');
 const mongoose= require('mongoose');
 const express = require('express')
 const app = express();
+const striptags = require('striptags');
 const Yup = require('yup')
 const Course = require('../Models/coursesModel')
 const Student = require('../Models/studentModel')
-const striptags = require("striptags");
 const registeredCourses = require('../Models/registeredCoursesModel')
 const expressLayouts = require('express-ejs-layouts');
 require('dotenv').config()
@@ -28,6 +28,11 @@ const credentials = {
 
 //Initialize the SDK
 const AfricasTalking = require('africastalking')(credentials)
+
+//Get the SMS service
+const sms = AfricasTalking.SMS
+
+
 
 
 // GRID FS file uploading to MOngo DB
@@ -178,6 +183,10 @@ if(tutor){
 //@route POST api/tutor/login
 //@access Public
 
+const getCreateCourse = asyncHandler(async (req, res, next) =>{
+  res.render()
+})
+
 
 const tutorLogin= asyncHandler(async (req , res , next)=>{
   
@@ -209,6 +218,7 @@ const tutorLogin= asyncHandler(async (req , res , next)=>{
         failureRedirect: '/tutorLogin',
         failureFlash: true
       })(req, res, next);
+      
       return
   }
 
@@ -303,7 +313,7 @@ const sendCourseUpdatesForm = asyncHandler(async(req, res)=>{
 
 const sendCourseUpdate = asyncHandler(async(req, res)=>{ 
   let errors = []
-  let phoneNumbers = []
+  let phoneNumber = []
   const studentIds = await registeredCourses.find({courseID: req.params.id})
   const totalStudent = studentIds.length
   const course = await Course.findOne({courseID: new Object(req.params.id)})
@@ -312,35 +322,32 @@ const sendCourseUpdate = asyncHandler(async(req, res)=>{
   // console.log(studentIds)
   studentIds.forEach(async studentId => {
     let student = await Student.findById(studentId.studentID)
+    console.log(student.tel)
     update = req.body.topic + "\n" + striptags(req.body.updates).replace(/[\r\n]/gm, '')
-    phoneNumbers.push(student.tel)
-    
-    
+    let res = await sendMessage(student.tel, update)
+    console.log(res)
+    console.log(student.tel)
+  
   });
-  await sendMessage(phoneNumbers, update)
-    .then(res => console.log(res))
-    // console.log(result)
+  console.log(phoneNumber)
   res.redirect(`/api/tutor/sendCourseUpdatesForm/${req.params.id}`,course,errors,tutor,totalStudent)
 })
 
-
 let sendMessage = async(studentNumber, update)=> {
-  //Get the SMS service
-  const sms = AfricasTalking.SMS
+  let errors = []
   const options = {
-    
       //set the numbers you want to send to international format
-      to: studentNumber,
+      to: '+254111723326',
       // Set your message
       message: update,
       // Set your shortcode or senderID
       from: ''
   }
-  console.log(studentNumber)
-  return sms.send(options)
-  
+  return await sms.send(options)
+
 } 
     
+
 module.exports={
 
 registerTutor,
