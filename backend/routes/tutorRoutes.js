@@ -8,7 +8,6 @@ const {
 registerTutor, 
 tutorLogin,
 tutorLogout,
-myCourse,
 uploadMiddleware, 
 uploadController, 
 getAllFiles, 
@@ -17,9 +16,9 @@ uploadNotes,
 getNotesUploaded,
 sendCourseUpdatesForm,
 sendCourseUpdate,
-myCourses
+myCourses,
+viewFullNotesContent
 } = require('../controler/tutorController');
-const {registerTutor, tutorLogin, tutorLogout, uploadMiddleware, uploadController, getAllFiles, getSingleFile, uploadNotes, getNotesUploaded,viewFullNotesContent} = require('../controler/tutorController');
 
 
 
