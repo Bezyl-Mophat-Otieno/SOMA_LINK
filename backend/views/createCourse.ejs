@@ -1,0 +1,38 @@
+<h5 class="text-start display-5 my-4">Resource Uploads</h5>
+  <!-- navbar -->
+<%- include('./partials/headerTutorDashboard.ejs') %> 
+<!-- //setGoal Modal && setSkill Modal -->
+<%- include('./partials/goalModal.ejs') %> 
+<%- include('./partials/skillModal.ejs') %> 
+<!-- navbar -->
+
+
+  <div class="container mt-5 col-12">
+    <%- include('./partials/messagePrompts.ejs') %> 
+    <div class="row col-12">
+      <div class="col-md-6 m-auto col-6">
+        <h2>Create A Course</h2>
+        <form action="/api/courses/createCourse" method="POST">
+          <div class="custom-file mb-3">
+            <label for="text" class="form-label text-bold" >Title</label>
+            <input type="text" name="title" id="title" class="form-control " required>
+            <label for="text" class="form-label text-bold mt-4">Description</label>
+            <textarea name="description" id="description" class="form-control" required></textarea>
+          </div>
+          <input type="submit" value="Create" class="btn btn-success col-6">
+        </form>
+        <hr>
+      </div>
+      <div class="col-md-6 m-auto col-6">
+        <form action="/uploadFiles" method="POST" enctype="multipart/form-data">
+          <div class="custom-file mb-3">
+            <input type="file" name="file" id="file" class="custom-file-input">
+            <label for="file" class="custom-file-label text-bold">Choose File</label>
+          </div>
+          <input type="submit" value="Submit" class="btn btn-success col-6">
+        </form>
+        <hr>
+      </div>
+      
+    </div>
+  </div>
