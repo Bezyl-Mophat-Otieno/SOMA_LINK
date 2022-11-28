@@ -176,7 +176,7 @@ if(!files || files.length==0){
 const registerTutor= asyncHandler(async (req,res)=>{
     
 //Making sure all the details of the student are captured 
-            const { name , course,tel, email, password ,password2 } = req.body;
+            const { name , course, tel, email, password ,password2 } = req.body;
 let errors = [];
 //Ensuring all fields are filled
             if(!name || !email || !course || !tel || !password || !password2){
@@ -251,6 +251,7 @@ const hashedPassword = await bcrypt.hash(password,salt);
 name:req.body.name,
 course:req.body.course,
 email:req.body.email,
+tel:req.body.tel,
 password:hashedPassword,
 role:req.body.role,
 
@@ -396,6 +397,10 @@ res.redirect('/');
 const uploadNotes = asyncHandler (async ( req, res) =>{
 const { course,topic, content,tutorName } = req.body ;
 if(!course || !topic|| !content || !tutorName){
+  console.log(course)
+  console.log(topic)
+  console.log(content)
+  console.log(tutorName)
 
 
     res.status = 400;
@@ -410,10 +415,11 @@ let content = await CourseContent.create({
 tutor:req.user.name,
 course:req.body.course,
 content: striptags (req.body.content)
+
 })
 
 if(content) {
-
+console.log(content)
     
  req.flash('success_msg', 'Notes uploaded Successfully !')
 res.redirect('/tutorDashboard')
@@ -440,6 +446,7 @@ const getNotesUploaded =asyncHandler (async(req , res )=>{
   const notes = await CourseContent.find({}).lean();
   res.render('Notes_Dashboard',{title:'Notes',notes});
 })
+
 
 const sendCourseUpdate = asyncHandler(async(req, res)=>{ 
   let errors = []

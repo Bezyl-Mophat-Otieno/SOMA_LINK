@@ -103,6 +103,8 @@ font-family: 'Edu VIC WA NT Beginner', cursive;
   display: block;
   text-decoration: none;
   transition: 250ms all;
+  max-height:300px;
+  overflow: auto;
   
   
 }

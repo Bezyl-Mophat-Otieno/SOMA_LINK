@@ -40,20 +40,47 @@
 <%if(notes.length > 0){ %>
 <div class="row row-cols-1 row-cols-md-2">
  <%notes.forEach((note)=>{ %>
-  
   <div class="col  gx-1">
-    <a href="" class="card notes__card mb-5 mt-5 shadow rounded m-auto ">
+    <a href="" class="card notes__card mb-5 mt-1 shadow rounded m-auto ">
       <div class="card-body ">
         <h5 class="card-title"> <b class="h5 font-weight-light text-monospace text-success"> Course : </b>   <%- note.course %>  </h5>
         <h5 class="card-title2">  <%- note.tutor %>  </h5>
         <p class="card-text"> <%- note.content %></p>
+<<<<<<< Updated upstream
         <a  href="http://localhost:8000/api/tutor/Notes/<%- note._id %> " class="btn btn-success rounded-pill " >View Full </a>
+=======
+        <a  href="#viewNote" data-bs-toggle="modal" class="btn btn-success rounded-pill " >View Full </a>
+        <div class="modal fade modal-fullscreen" id="viewNote" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+      
+                  <div class="card">
+                      <div class="card-header">
+                        <%- note.course %> 
+                      </div>
+                      <div class="card-body">
+                        <!-- <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                        <%- note.content %> <br>
+                        <a href="#" class="btn btn-success">Take Notes</a>
+                      </div>
+                    </div>
+                   
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+>>>>>>> Stashed changes
       </div>
     </a>
-
   </div>
-
-
 <%});%>
 <% }else {%>
 <h1 class="btn btn-outline-secondary rounded-pill shadow mb-5 mt-5 text-align-center w-100  " >No Notes Uploaded Recently </h1>

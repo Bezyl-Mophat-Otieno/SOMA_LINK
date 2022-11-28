@@ -105,6 +105,7 @@ const searching = asyncHandler( async(req,res) =>{
 const tutorDashboard =asyncHandler( async (req,res) => {
 
   res.render('tutor_Dashboard',{tutor:req.user , title:'TUTOR_DASHBOARD'})
+  console.log(req.user)
 
  })
 

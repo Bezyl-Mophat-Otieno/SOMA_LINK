@@ -29,6 +29,7 @@ const createCourse = asyncHandler(async (req,res, next)=>{
     const {title, description} = req.body;
     console.log(req.body.createdBy)
     req.body.description = striptags(req.body.description).replace(/[\r\n]/gm, '')
+    console.log(description.length)
     if(!title && !description){
     res.status(400)
     errors.push({msg:'Kindly Fill in the required Field'});
@@ -50,7 +51,8 @@ const createCourse = asyncHandler(async (req,res, next)=>{
 })
 
 const createCourseForm = asyncHandler(async (req, res)=>{
-    let tutor = await Tutor.findById(req.user.id)
+    // let tutor = await Tutor.findById(req.user.id)
+let tutor = req.user.name;
     return res.render('createCourse',{title: 'Create Course',tutor})
 })
 
@@ -124,6 +126,7 @@ const updateCourse =asyncHandler ( async (req,res)=>{
 
 
 })
+
 
 
 
