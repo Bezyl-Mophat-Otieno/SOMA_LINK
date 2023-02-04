@@ -1,14 +1,9 @@
-
 const express= require('express');
 const passport = require('passport');
 const { forwardAuthenticated } = require('../config/auth');
 const app = express();
 const router = express.Router()
-<<<<<<< HEAD
-const {registerTutor, tutorLogin, tutorLogout, uploadMiddleware, uploadController, getAllFiles, getSingleFile, uploadNotes, getNotesUploaded,viewFullNotesContent} = require('../controler/tutorController');
 
-
-=======
 const {
 registerTutor, 
 tutorLogin,
@@ -20,11 +15,10 @@ getAllFiles,
 getSingleFile, 
 uploadNotes, 
 getNotesUploaded,
-sendCourseUpdatesForm,
 sendCourseUpdate,
 myCourses
 } = require('../controler/tutorController');
->>>>>>> mugo_features
+
 
 router.post('/',registerTutor);
 router.post('/login',tutorLogin);
@@ -38,7 +32,6 @@ router.post('/uploadFiles',uploadMiddleware,uploadController);
 router.post('/uploadNotes',uploadNotes);
 router.get('/Notes',getNotesUploaded);
 router.get('/Notes/:id',viewFullNotesContent);
-
 
 
 
