@@ -2,7 +2,7 @@
 
 SOMA_LINK is a web application that allows professionals to connect with each other and find job opportunities.
 
-##Table of Contents
+## Table of Contents
 
     - Overview
     - Features
@@ -41,29 +41,29 @@ To run SOMA_LINK locally, follow these steps:
 
 Navigate to the server directory and install dependencies:
 
-```javascript cd SOMA_LINK/server
-npm install
+`javascript cd SOMA_LINK/server
+npm install`
 
 Start the server:
 
 sql
 
-npm start
+`npm start`
 
 Navigate to the client directory and install dependencies:
 
 
 
-cd ../client
-npm install
+`cd ../client`
+`npm install`
 
 Start the client:
 
 sql
 
-    npm start 
-
-    Open your browser and go to http://localhost:3000.
+  `npm start`
+  open the browser and navigate to :
+  ` http://localhost:5000`
 
 ## Usage
 
@@ -72,13 +72,13 @@ Contributing
 
 ### Contributions to SOMA_LINK are always welcome! To contribute, follow these steps:
 
-    Fork the repository.
-    Create a new branch.
-    Implement your feature or bug fix.
-    Write tests if applicable.
-    Run tests and ensure they pass.
-    Commit your changes and push to your branch.
-    Create a pull request.
+   - Fork the repository.
+   - Create a new branch.
+   - Implement your feature or bug fix.
+   - Write tests if applicable.
+   - Run tests and ensure they pass.
+   - Commit your changes and push to your branch.
+   - Create a pull request.
 
 Please make sure to follow the code style and testing guidelines outlined in the repository.
 License
