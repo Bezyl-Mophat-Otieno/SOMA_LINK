@@ -37,19 +37,19 @@ To run SOMA_LINK locally, follow these steps:
     Clone the repository:
 
 
-``` git clone https://github.com/Bezyl-Mophat-Otieno/SOMA_LINK.git ```
+```git clone https://github.com/Bezyl-Mophat-Otieno/SOMA_LINK.git```
 
 Navigate to the server directory and install dependencies:
 
 
-``` cd SOMA_LINK/server
+```cd SOMA_LINK/server
 npm install
 
 Start the server:
 
 sql
 
-npm start ```
+npm start```
 
 Navigate to the client directory and install dependencies:
 
