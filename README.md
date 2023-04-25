@@ -41,25 +41,25 @@ To run SOMA_LINK locally, follow these steps:
 
 Navigate to the server directory and install dependencies:
 
-`cd SOMA_LINK/server
+```javascript cd SOMA_LINK/server
 npm install
 
 Start the server:
 
 sql
 
-npm start`
+npm start
 
 Navigate to the client directory and install dependencies:
 
 
 
-`cd ../client
+cd ../client
 npm install
 
 Start the client:
 
-sql`
+sql
 
     npm start 
 
