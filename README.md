@@ -1,7 +1,7 @@
 # SOMA_LINK
-SOMA_LINK is a web application that enables needy University students to access learning materials , class updates and other updates offline without the need of having a smart phone 
+SOMA_LINK is a web application that enables needy University students to access learning materials , class updates and university communication offline without the need of having a smart phone 
 
-## skills Learnt
+## Skills Learnt
 - Backend Programming using Express.js which is a javascript framework.
 - Use of EJS Templating Engine to render  Views. 
 - REST Api design Paradigm and best practices
