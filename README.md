@@ -1,6 +1,14 @@
 # SOMA_LINK
+SOMA_LINK is a web application that enables needy University students to access learning materials , class updates and other updates offline without the need of having a smart phone 
 
-SOMA_LINK is a web application that allows professionals to connect with each other and find job opportunities.
+## skills Learnt
+- Backend Programming using Express.js which is a javascript framework.
+- Use of EJS Templating Engine to render  Views. 
+- REST Api design Paradigm and best practices
+- NoSQL Database system (Mongo DB)
+- Role based  Authentication using Passport JS.
+- API consumption.
+- API design best practices such as the skill of how to name endpoints .
 
 ## Table of Contents
 
@@ -14,13 +22,13 @@ SOMA_LINK is a web application that allows professionals to connect with each ot
 
 ## Overview
 
-SOMA_LINK is a platform designed to help professionals network with each other and find job opportunities. The application features user authentication, profile creation, job search and application functionality, as well as a real-time messaging system for networking and collaboration.
+SOMA_LINK is a platform designed to help needy students in higher learning institutions to access academic materials such as notes and discussion pamphlets , class venue and other academic related communications offline without the need of a smartphone. The application features user authentication, profile creation, Notes Posting, course registration , as well as a real-time messaging system for networking and collaboration.
 Features
 
    - User authentication and profile creation
-   - Job search and application functionality
-   - Ability to save job postings
-   - Real-time messaging system for networking and collaboration
+   - JCourse Registration and Notes Posting
+   - Ability to post and share videos
+   - Real-time messaging system for networking and collaboration between students and also tutors.
 
 ## Technologies Used
 
@@ -29,6 +37,7 @@ Features
    - MongoDB
    - React.js
    - Bootstrap
+   - Africas Talking
 
 ## Installation
 
